@@ -5,6 +5,7 @@
 
 char getch();
 void putch(char ch);
-void pstring(const char *str);
+void getstr(char *str, int buffer);
+void putstr(const char *str);
 
 #endif

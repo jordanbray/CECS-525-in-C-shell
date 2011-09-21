@@ -8,11 +8,12 @@ void main() {
 	putstr("Hello ");
 	putstr(" World!!!\n");
 	
-	getstr(str, 10);
-	
 	putstr("Entering Echo Mode\n");
 	while(1)
 	{
-		putch(getch());
+		getstr(str, 10);
+		putstr("Echo: ");
+		putstr(str);
+		putch('\n');
 	}
 }
