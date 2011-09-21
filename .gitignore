@@ -1,3 +1,4 @@
 *.o
+main
 attach_gdb_to_this
 
