@@ -8,6 +8,7 @@ implement rest of MMONITOR, in particular:
 		+ Maybe search for a full simple c library.
 			* Jimmy said something about something like this
 			  existing.
+		+ Implement the exception vector stuffs
 	- 
 
 make CECS-525-QEMU stop on the STOP {argument} instruction.
