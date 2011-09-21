@@ -1,25 +1,68 @@
 implement rest of MMONITOR, in particular:
-	- fill in the __asm_getch__ shell in assembly.c
-	- fix whatever bugs that creates in getch in screen.c
-	- copy/paste a proper malloc/free/realloc from somewhere.
-		+ If i remember correctly, they're all over the place...
-		+ We may need to search for a kalloc or kmalloc for kernel
+	* copy/paste a proper malloc/free/realloc from somewhere.
+		@ If i remember correctly, they're all over the place...
+		@ We may need to search for a kalloc or kmalloc for kernel
 		  memory allocation.
+	* implement his commands
+	
 
-Maybe search for a full simple c library.
-	- Jimmy said something about newlib as a c library.  To implement it
-	  (or any other c library), we have to provide it with the following
-	  functions.  We will need some sort of in-memory filesystem.
-		* There are 18 needed functions.
-		* They are defined in needed_for_libc.h
-		* They don't need to be fully functional, just enough to trick
-		  * the library into running.
-		* We should decide if we want to implement them or not.
-		* To look at what the standard requires from each of these, go
-		  here: http://pubs.opengroup.org/onlinepubs/009695399/toc.htm
+
+Maybe search for a full simple c library.  Jimmy said something about newlib 
+as a c library.  To implement it (or for the most part any other c library),
+we have to provide it with the following functions.
+	* There are 18 needed functions
+		@ They are defined in needed_for_libc.h
+		@ They don't need to be fully functional, just enough to trick
+		  the library into running.
+		@ Filesystem support will be needed
+			= open/read/write/close/link/lseek/stat/fstat/isatty/unlink
+			= Possibly an in-memory filesystem (as in, steal a binary tree
+			  implementation from somewhere)
+			= Have the 'filesystem' start a particular point in memory,
+			  and just embed the filesystem into the binary.
+			= No need really for actual permissions checking, and linking
+			  can probably just always throw an error.
+			= std{in,out,err} need to be accessable with these functions.
+		@ Process support will be needed
+			= Not multitasking
+			= No dynamic linking
+			= execve/_exit/getpid/wait/fork/kill
+				> Of these, i would not implement wait, fork or kill.
+				  Instead, just have them throw errors.
+			= I have no idea how to do virtual address space, but it will
+			  probably be required.  TODO: research this
+		@ Basic kernel function will be needed
+			= times/sbrk
+			= Timing information and adding more virtual memory to a process
+		@ We have to define errno somewhere...
+	* Once that is done, to implement newlib:
+		@ The following is a copy pasta from:
+			= http://sourceware.org/newlib/faq.html#q6
+		@ Add a newlib/libc/m68k directory
+			= crate syscalls, including setjmp/longjmp
+		@ edit m68k/ieeefp.h
+			= sets endianness
+		@ m68k/setjmp.h
+			= defines our setjmp buffer characteristics to match our
+			  implementation.  Apparently there ar examples.  One of them
+			  is called fr30, but I couldn't find it.
+		@ newlib/libc/include/sys/config.h
+			= Contains various defines specific to our architecture. Edit
+			  them.
+		@ configure.host
+			= Add our configuration.
+			= Specify our machine directory 'm68k' in the machine_dir
+			  variable.
+			= read comments in newlib/libc/include/reent.h apparently...
+		@ Add a platform subdirectory to libgloss
+			= This is where we point newlib to our syscalls
+		
+				
+	* To look at what the standard requires from each of these, go
+	  here: http://pubs.opengroup.org/onlinepubs/009695399/toc.htm
 
 make CECS-525-QEMU stop on the STOP {argument} instruction.
-	- I have no idea how to do this.
+	* I have no idea how to do this.
 
 probably finish the lab at some point...
-	- Also finish up this section...
+	* Also finish up this section...
