@@ -7,6 +7,7 @@ void main() {
 	__asm_initialize__();
 	putstr("Hello ");
 	putstr(" World!!!\n");
+	asm ("trap #0\n");
 	
 	putstr("Entering Echo Mode\n");
 	while(1)
