@@ -5,6 +5,8 @@ AS=m68k-elf-as
 OBJCOPY=m68k-elf-objcopy
 QEMU=/opt/m68k/bin/qemu-system-m68k
 
+CFLAGS=-nostdlib -nostartfiles -nodefaultlibs
+
 main: assembly.o iv.o screen.o main.o linker.x
 	${LD} main.o assembly.o iv.o screen.o -o main -T linker.x -Map main.map
 	cp main attach_gdb_to_this
@@ -17,13 +19,13 @@ iv.o: iv.asm
 	${AS} -o iv.o iv.asm
 
 main.o: main.c
-	${CC} -c main.c -nostdlib -nostartfiles -nodefaultlibs -o main.o
+	${CC} ${CFLAGS} -c main.c -o main.o
 
 assembly.o: assembly.h assembly.c
-	${CC} -o assembly.o -c assembly.c
+	${CC} ${CFLAGS} -o assembly.o -c assembly.c
 
 screen.o: screen.h screen.c assembly.h
-	${CC} -o screen.o -c screen.c
+	${CC} ${CFLAGS} -o screen.o -c screen.c
 
 run: main
 	${QEMU} -M cecs -nographic -kernel main -gdb tcp::1234
