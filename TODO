@@ -1,0 +1,18 @@
+implement rest of MMONITOR, in particular:
+	- fill in the __asm_getch__ shell in assembly.c
+	- fix whatever bugs that creates in getch in screen.c
+	- copy/paste a proper malloc/free/realloc from somewhere.
+		+ If i remember correctly, they're all over the place...
+		+ We may need to search for a kalloc or kmalloc for kernel
+		  memory allocation.
+		+ Maybe search for a full simple c library.
+			* Jimmy said something about something like this
+			  existing.
+	- 
+
+make CECS-525-QEMU stop on the STOP {argument} instruction.
+	- I have no idea how to do this.
+
+probably finish the lab at some point...
+	- Also finish up this section...
+

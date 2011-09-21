@@ -1,0 +1,37 @@
+Features:
+	Correctly sets up Initialization Vectors!
+	Prints stuff to the screen!
+	Initializes hardware with inline assembly!
+	Connects with GDB!
+	Has Makefile!
+
+Before Use:
+	- Compile CECS-525-QEMU
+		+ Written by Tyler Hall
+		+ http://bit.ly/r7tiCq
+		+ TODO: Add instructions
+	
+	- Modify Makefile to point to your cross compiler toolchain and qemu
+          instance.
+		+ Recommended toolchain is the cross-m68k-elf-{gcc,binutils,gdb}
+		  in the AUR
+		+ http://bit.ly/oT8Hnw
+		+ Requires Arch Linux.
+
+To Use:
+	- Launch a qemu instance waiting for gdb to attach:
+		$ make debug
+	  Then, in a new terminal:
+		$ ./run_gdb
+
+	- Launch program:
+		$ make run
+	  Can still attach gdb if you make it in time with:
+		$ ./run_gdb
+
+	- Just compile:
+		$ make
+
+	- Get dissassembly:
+		$ make dissassemble
+

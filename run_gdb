@@ -1,0 +1,1 @@
+m68k-elf-gdb -se=attach_gdb_to_this -command=gdb_commands
