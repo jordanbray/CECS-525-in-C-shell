@@ -1,6 +1,6 @@
 #include "screen.h"
 
-void pstring(const char *str) {
+void putstr(const char *str) {
 	int i;
 	for (i = 0; str[i] != 0; i++)
 		putch(str[i]);
@@ -9,6 +9,22 @@ void pstring(const char *str) {
 void putch(char ch) {
 	asm ("move.b %0, %%d0\n" :"=r"(ch));
 	__asm_putch__();
+}
+
+void getstr(char *str, int buffer) {
+	int i;
+	char ch;
+	
+	for (i=0; i < buffer; i++)
+	{
+		ch = getch();
+		if (ch == 13) //if enter key is hit stop
+		{
+			break;
+		}
+		putch(ch);
+	}
+	putch('\n');
 }
 
 char getch() {
