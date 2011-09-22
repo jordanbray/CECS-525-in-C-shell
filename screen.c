@@ -55,7 +55,7 @@ char getch() {
 }
 
 void puthexint(int input) {
-	char hex[] = "00000000";
+	char hex[8] = "00000000";
 	int i;
 	for (i = 0; i < 8; i++) {
 		hex[7-i] = (char) (input & 0xf);
@@ -68,5 +68,8 @@ void puthexint(int input) {
 	putstr("0x");
 	for (i = 0; hex[i] == '0' && i < 7; i++);
 	int j = 0;
-	for (j=i; j < 8; j++);// putch(hex[i]);
+	for (j=i; j < 8; j++)
+	{
+		putch(hex[i]);
+	}
 }
