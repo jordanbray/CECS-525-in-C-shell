@@ -30,6 +30,7 @@ void main() {
 	kmeminit();
 	putstr("Hello ");
 	putstr(" World!!!\n");
+	asm ("trap #0\n");
 	
 	putstr("Performing Memory Test\n");
 	memtest();

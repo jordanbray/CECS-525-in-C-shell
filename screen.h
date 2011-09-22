@@ -7,5 +7,6 @@ char getch();
 void putch(char ch);
 void getstr(char *str, int buffer);
 void putstr(const char *str);
+void puthexint(int i);
 
 #endif
