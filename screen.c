@@ -36,3 +36,18 @@ char getch() {
 	return ch;
 }
 
+void puthexint(int input) {
+	char hex[] = "00000000";
+	int i;
+	for (i = 0; i < 8; i++) {
+		hex[7-i] = (char) (input & 0xf);
+		input >>= 4;
+		if (hex[7-i] <= 9)
+			hex[7-i] += '0';
+		else
+			hex[7-i] += 'a';
+	}
+	putstr("0x");
+	for (i = 0; hex[i] == '0' && i < 7; i++);
+	for (; i < 8; i++) putch(hex[i]);
+}

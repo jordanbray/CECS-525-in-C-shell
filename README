@@ -4,6 +4,11 @@ Features:
 	Initializes hardware with inline assembly!
 	Connects with GDB!
 	Has Makefile!
+	A full:
+		1k of stack space!
+		1k of kernel space!
+		2k of program space!
+		8k of dynamic memory!
 
 Before Use:
 	- Compile CECS-525-QEMU
