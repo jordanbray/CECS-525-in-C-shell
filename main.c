@@ -44,8 +44,15 @@ void main() {
 	while(1)
 	{
 		getstr(ptr, 80);
+		if (strcmp(ptr, "STOP"))
+		{
+			putstr("Exit\n");
+			break;
+		}
 		putstr("Echo: ");
 		putstr(ptr);
 		putch('\n');
 	}
+	
+	while(1);
 }
