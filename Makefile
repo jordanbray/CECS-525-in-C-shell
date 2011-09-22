@@ -9,11 +9,13 @@ CFLAGS=-nostdlib -nostartfiles -nodefaultlibs
 CFLAGS+=-m68000
 CFLAGS+=-Os
 
-main: assembly.o iv.o screen.o main.o exception.o linker.x kmem.o
-	${LD} main.o assembly.o iv.o screen.o exception.o kmem.o -o main -T linker.x -Map main.map
+main: assembly.o iv.o screen.o main.o exception.o linker.x kmem.o string.o
+	${LD} main.o assembly.o iv.o screen.o exception.o kmem.o string.o -o main -T linker.x -Map main.map
 	cp main attach_gdb_to_this
 	${OBJCOPY} -O srec main
 
+string.o: string.h string.c
+	${CC} ${CFLAGS} -c string.c -o string.o
 disassemble: main
 	${OBJDUMP} -D attach_gdb_to_this
 
@@ -42,5 +44,5 @@ debug: main
 	${QEMU} -M cecs -nographic -kernel main -S -gdb tcp::1234
 
 clean:
-	rm assembly.o screen.o iv.o attach_gdb_to_this main main.o kmem.o main.map
+	rm assembly.o screen.o iv.o attach_gdb_to_this main main.o kmem.o main.map string.o
 
