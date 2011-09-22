@@ -1,4 +1,5 @@
 implement rest of MMONITOR, in particular:
+    * Implement useful error messages from exception vectors.
 	* copy/paste a proper malloc/free/realloc from somewhere.
 		@ If i remember correctly, they're all over the place...
 		@ We may need to search for a kalloc or kmalloc for kernel
