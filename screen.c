@@ -36,14 +36,14 @@ void getstr(char *str, int buffer) {
 	for (i=0; i < buffer-1; i++)
 	{
 		ch = getch();
-		if (ch == 13) //if enter key is hit stop
+		if (ch == '\r') //if enter key is hit stop
 		{
 			break;
 		}
 		str[i] = ch;
 		putch(ch);
 	}
-	str[i+1] = 0;
+	str[i] = 0;
 	putch('\n');
 }
 
