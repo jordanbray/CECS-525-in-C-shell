@@ -25,27 +25,43 @@ void memtest() {
 
 }
 
+void shell() {
+	char ptr[64];
+	
+	putstr("Welcome to the (unstable) C Kernel\n");
+	
+	while(1)
+	{
+		putstr("> ");
+		getstr(ptr, 64);
+		if (strcmp(ptr, "STOP"))
+		{
+			putstr("Exiting...\n");
+			return;
+		}
+		else if (strcmp(ptr, "MEMTEST"))
+		{
+			putstr("Performing Memory Test\n");
+			memtest();
+		}
+		else if (strcmp(ptr, "ERRTEST"))
+		{
+			asm ("trap #0\n");
+		}
+		else
+		{
+			putstr("Echo: ");
+			putstr(ptr);
+			putch('\n');
+		}
+	}
+}
+
 void main() {
 	__asm_initialize__();
 	kmeminit();
-	putstr("Hello ");
-	putstr(" World!!!\n");
-	asm ("trap #0\n");
 	
-	putstr("Performing Memory Test\n");
-	memtest();
-
-	putstr("Entering Echo Mode\n");
-
-	char ptr[64];
-	ptr[0] = 'H';
-	ptr[1] = '\n';
-	ptr[2] = '\x00';
-	while(1)
-	{
-		getstr(ptr, 80);
-		putstr("Echo: ");
-		putstr(ptr);
-		putch('\n');
-	}
+	shell();
+	
+	while(1);
 }
