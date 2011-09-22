@@ -63,10 +63,9 @@ void puthexint(int input) {
 		if (hex[i] <= 9)
 			hex[i] += '0';
 		else
-			hex[i] += 'a';
+			hex[i] += 'a' - 10;
 	}
 	putstr("0x");
 	for (i = 0; hex[i] == '0' && i < 7; i++);
-	int j = 0;
-	for (j=i; j < 8; j++);putch(hex[7-i]);
+	for (;i < 8; i++)putch(hex[7-i]);
 }
