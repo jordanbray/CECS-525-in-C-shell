@@ -68,5 +68,5 @@ void puthexint(int input) {
 	putstr("0x");
 	for (i = 0; hex[i] == '0' && i < 7; i++);
 	int j = 0;
-	for (j=i; j < 8; j++);// putch(hex[i]);
+	for (j=i; j < 8; j++);putch(hex[i]);
 }
