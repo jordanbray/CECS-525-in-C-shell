@@ -9,15 +9,6 @@ typedef struct {
 
 volatile acia_t *const acia = (acia_t *)0x8000;
 
-#define STATUS_IRQ      (1 << 7)
-#define STATUS_PE       (1 << 6)
-#define STATUS_OVRN     (1 << 5)
-#define STATUS_FE       (1 << 4)
-#define STATUS_CTS      (1 << 3)
-#define STATUS_DCD      (1 << 2)
-#define STATUS_TDRE     (1 << 1)
-#define STATUS_RDRF     (1 << 0)
-
 void putstr(const char *str) {
 	int i;
 	for (i = 0; str[i] != 0; i++) {
@@ -49,6 +40,8 @@ void getstr(char *str, int buffer) {
 	
 	while (i < buffer-2)
 	{
+		str[i] = 0;
+		
 		ch = getch();
 		if (ch == '\r') //if enter key is hit stop
 		{
@@ -59,11 +52,11 @@ void getstr(char *str, int buffer) {
 			putch(ch);
 			i--;
 		}
-		else
+		else if (IS_PRINTABLE(ch))
 		{
 			str[i] = ch;
 			putch(ch);
-			i++
+			i++;
 		}
 	}
 	str[i] = 0;
