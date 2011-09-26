@@ -46,21 +46,31 @@ int memcmp(const void* s1, const void* s2,int n)
 	return 0;
 }
 
-void *memmove(void *dest, const void *src, int n)
+void *mymove(void *dst, const void *src, int size)
 {
-	unsigned char *pd = dest;
-	const unsigned char *ps = src;
-	if (__np_anyptrlt(ps, pd)) {
-		for (pd += n, ps += n; n--;) {
-			*--pd = *--ps;
-		}
-	}
-	else {
-		while(n--) {
-			*pd++ = *ps++;
-		}
-	}
-	return dest;
+    char **to = dst;
+    const char **from = src;
+    int i,diff;
+    
+    if(*from==*to)
+        return dst;
+    else if(*from>*to)
+    {
+        diff=*from-*to; 
+        for(i=diff;i<=size+diff-1;i++)
+        {
+            (*to)[i-diff] = (*from)[(i-diff)];
+        }
+    }
+    else
+    {
+        diff=*to-*from; 
+        for(i=size+diff-1;i>=diff;i--)
+        {
+            (*to)[(i-diff)] = (*from)[(i-diff)]; 
+        }
+    }
+    return dst;
 }
 
 int strcmp(const char *s1, const char *s2)

@@ -49,7 +49,6 @@ void *kmalloc(int size) {
 			blocks_inside_free_block++;
 		}
 	}
-    putch('\n');
 	// all blocks checked, and smallest available block that fits size in it
 	// has been chosen
 	if (best_length == 0x7fffffff) {

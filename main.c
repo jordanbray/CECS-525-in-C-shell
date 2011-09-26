@@ -2,6 +2,7 @@
 #include "kmem.h"
 #include "string.h"
 #include "shell.h"
+#include "tree.h"
 
 void *test_malloc(int bytes) {
 	void *ptr = kmalloc(bytes);
@@ -27,7 +28,22 @@ void memtest() {
     test_free(p3);
 }
 
+void test_tree() {
+    struct tnode *root = NULL;
+    root = tnode_insert(root, "one", ((void*)1));
+    root = tnode_insert(root, "two", ((void*)2));
+    root = tnode_insert(root, "three", ((void*)3));
+    root = tnode_insert(root, "four", ((void*)4));
+    root = tnode_insert(root, "five", ((void*)5));
+    root = tnode_insert(root, "negative 1", (void*)-1);
+    struct tnode *node = tnode_search(root, "four");
+    if (((int *)node->value) == ((int *)4))
+        putstr("SUCCESS\n");
+    else
+        putstr("FAILURE\n");
+    tnode_destroy(root);
 
+}
 
 void main() {
 	initialize_acia();
