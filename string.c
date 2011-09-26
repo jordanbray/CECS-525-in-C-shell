@@ -2,8 +2,9 @@
 
 int strlen(const char *s) {
 	const char *old = s;
-	while (*s)
+	while (*s) {
 		s++;
+	}
 	return (s - old);
 }
 
@@ -45,7 +46,7 @@ int memcmp(const void* s1, const void* s2,int n)
 	return 0;
 }
 
-void *memmove(void *dest, const void *src, size_t n)
+void *memmove(void *dest, const void *src, int n)
 {
 	unsigned char *pd = dest;
 	const unsigned char *ps = src;
