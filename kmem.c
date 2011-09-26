@@ -1,16 +1,19 @@
 #include "kmem.h"
 
-char *blocks;
+unsigned char *blocks;
 
-#define GETBIT(index) ((blocks[index/8]) & (1 << (7 - (index % 8))))
-#define SETBIT(index) (blocks[index/8]=blocks[index/8]|(1 << (7 - (index % 8))))
-#define CLRBIT(index) (blocks[index/8]&=0xff^(1<<(7 - (index % 8))))
+#define GETBIT(index) ((blocks[(index)/8]) & (1 << (7 - ((index) % 8))))
+#define SETBIT(index) (blocks[(index)/8]=blocks[(index)/8]|(1 << (7 - ((index) % 8))))
+#define CLRBIT(index) (blocks[(index)/8]&=0xff^(1<<(7 - ((index) % 8))))
 
 void kfree(void *ptr) {
 	ptr = ptr - 4;
-	int size = *((int *)ptr);
-	int index = (((int) ptr) - MEM_START)/MEM_BLOCK_SIZE;
-	CLRBIT(index);
+	int start_index = (((int) ptr) - MEM_START)/MEM_BLOCK_SIZE;
+    int num_blocks = *((int *)ptr);
+    int i;
+    for (i = start_index; i < (start_index + num_blocks); i++)
+        CLRBIT(i);
+    
 	*((int *)ptr) = 0;
 }
 
@@ -21,7 +24,7 @@ void *kmalloc(int size) {
 	// this is the same as ceil((size+4)/MEM_BLOCK_SIZE)
 	// the + 4 is because I prefix the pointer with the length of itself, and then
 	// just return the user the memory address + 4
-	int i;
+	unsigned int i;
 	int best_index = 0; // best block index from the search
 	void *address = NULL;
 	int best_length = 0x7fffffff; // best length from the search
@@ -30,13 +33,11 @@ void *kmalloc(int size) {
 		if (GETBIT(i)) { // found a used block
 			if (blocks_inside_free_block >= needed_blocks &&
 				blocks_inside_free_block < best_length) {
-				putstr("Found a working block\n");
 				best_index = i - blocks_inside_free_block;
 				best_length = blocks_inside_free_block;
 			}
 			blocks_inside_free_block = 0;
 		} else { // found a free block
-			putstr("Found a free block\n");
 			blocks_inside_free_block++;
 		}
 	}
@@ -49,19 +50,18 @@ void *kmalloc(int size) {
 	address = ((void *) (MEM_START + best_index*MEM_BLOCK_SIZE));
 	for (i = best_index; i < needed_blocks; i++)
 		SETBIT(i);
-	*((int *)address) = needed_blocks * MEM_BLOCK_SIZE;
+	*((int *)address) = needed_blocks;
 	address = ((void *) ((int)address) + 4);
 	return address;
 }
 
 void kmeminit() {
-	int needed_blocks = (MEM_BITSET_BYTES+MEM_BLOCK_SIZE-1)/MEM_BLOCK_SIZE;
-	int i;
-	blocks = (int *)MEM_START;
+	unsigned int needed_blocks = (MEM_BITSET_BYTES+MEM_BLOCK_SIZE-1)/MEM_BLOCK_SIZE;
+	unsigned int i;
+	blocks = (unsigned char *)MEM_START;
 	for (i = 0; i < needed_blocks; i++)
 		SETBIT(i);
 	for (; i < MEM_BITSET_BITS; i++)
 		CLRBIT(i);
-	SETBIT(MEM_BITSET_BITS-1); // wasting 128 bytes of memory because otherwise
-	// my poorly written kmalloc crashes :(
+	SETBIT(MEM_BITSET_BITS-1);
 }
