@@ -8,6 +8,8 @@ void *memset(void *dst, int value, int length); // TODO: write
 int memcmp(void *a, void *b, int length); // TODO: write
 int memmove(void *a, void *b, int length); // TODO: write
 int strcmp(const char *s1, const char *s2);
+char *strdup(const char *s);
+int strlen(const char *s);
 
 #define IS_PRINTABLE(ch) ((ch) >= ' ' && (ch) <= '~')
 

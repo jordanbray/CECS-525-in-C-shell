@@ -2,14 +2,22 @@
 
 unsigned char *blocks;
 
-#define GETBIT(index) ((blocks[(index)/8]) & (1 << (7 - ((index) % 8))))
-#define SETBIT(index) (blocks[(index)/8]=blocks[(index)/8]|(1 << (7 - ((index) % 8))))
-#define CLRBIT(index) (blocks[(index)/8]&=0xff^(1<<(7 - ((index) % 8))))
+#define GETBIT(index) ((blocks[(index)/8]) & (1 << ((index) % 8)))
+#define SETBIT(index) (blocks[(index)/8]=blocks[(index)/8]|(1 << ((index) % 8)))
+#define CLRBIT(index) (blocks[(index)/8]&=0xff^(1<<((index) % 8)))
+
+void printblocks() {
+    int i;
+    for (i = 0; i < MEM_BITSET_BITS; i++)
+        if (GETBIT(i)) putch('1');
+        else putch('0');
+    putch('\n');
+}
 
 void kfree(void *ptr) {
 	ptr = ptr - 2;
 	int start_index = (((int) ptr) - MEM_START)/MEM_BLOCK_SIZE;
-    int num_blocks = *((int *)ptr);
+    int num_blocks = *((short *)ptr);
     int i;
     for (i = start_index; i < (start_index + num_blocks); i++)
         CLRBIT(i);
@@ -41,6 +49,7 @@ void *kmalloc(int size) {
 			blocks_inside_free_block++;
 		}
 	}
+    putch('\n');
 	// all blocks checked, and smallest available block that fits size in it
 	// has been chosen
 	if (best_length == 0x7fffffff) {
@@ -48,7 +57,7 @@ void *kmalloc(int size) {
 		return NULL; // no blocks available
 	}
 	address = ((void *) (MEM_START + best_index*MEM_BLOCK_SIZE));
-	for (i = best_index; i < needed_blocks; i++)
+	for (i = best_index; i < best_index + needed_blocks; i++)
 		SETBIT(i);
 	*((short *)address) = needed_blocks;
 	address = ((void *) ((int)address) + 2);

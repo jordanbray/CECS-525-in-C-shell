@@ -1,5 +1,20 @@
 #include "string.h"
 
+int strlen(const char *s) {
+	const char *old = s;
+	while (*s)
+		s++;
+	return (s - old);
+}
+
+char *strdup(const char *s) {
+	int len = strlen(s);
+	char *ret = kmalloc(len + 1);
+	int i;
+	for (i = 0; i <= len; i++) // <= to copy the 0
+		ret[i] = s[i];
+}
+
 void *memcpy(void *dst, void *src, int num) {
 	char *cd = ((char *)dst);
 	char *cs = ((char *)src);

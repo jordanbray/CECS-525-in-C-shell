@@ -4,7 +4,7 @@
 
 void *test_malloc(int bytes) {
 	void *ptr = kmalloc(bytes);
-	putstr("Memory address: ");
+	putstr("Malloc'd and got: ");
 	puthexint((int)ptr);
 	putch('\n');
 	return ptr;
@@ -20,9 +20,10 @@ void test_free(void *ptr) {
 void memtest() {
 	void *p1 = test_malloc(124);
 	void *p2 = test_malloc(124);
-	test_free(p1);
 	void *p3 = test_malloc(124);
-
+    test_free(p1);
+    test_free(p2);
+    test_free(p3);
 }
 
 void shell() {

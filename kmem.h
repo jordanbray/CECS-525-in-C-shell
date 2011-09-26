@@ -16,6 +16,7 @@ void kfree(void *ptr);
 void *kmalloc(int size);
 void *krealloc(void *ptr, int size);
 void kmeminit();
+void printblocks();
 
 #endif
 
