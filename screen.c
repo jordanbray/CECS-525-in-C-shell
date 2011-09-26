@@ -30,18 +30,27 @@ void putch(char ch) {
 }
 
 void getstr(char *str, int buffer) {
-	int i;
+	int i =0;
 	char ch;
 	
-	for (i=0; i < buffer-1; i++)
+	while (i < buffer-2)
 	{
 		ch = getch();
 		if (ch == '\r') //if enter key is hit stop
 		{
 			break;
 		}
-		str[i] = ch;
-		putch(ch);
+		else if (ch == '\b')
+		{
+			putch(ch);
+			i--;
+		}
+		else
+		{
+			str[i] = ch;
+			putch(ch);
+			i++
+		}
 	}
 	str[i] = 0;
 	putch('\n');
