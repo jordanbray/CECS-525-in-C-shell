@@ -1,5 +1,7 @@
 #include "shell.h"
 
+struct tnode *root;
+
 void getcmd(char *str, int buffer) {
 	int i =0;
 	char ch;
