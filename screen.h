@@ -2,6 +2,7 @@
 #define __SCREEN_H__
 
 #include "assembly.h"
+#include "string.h"
 
 #define STATUS_IRQ      (1 << 7)
 #define STATUS_PE       (1 << 6)

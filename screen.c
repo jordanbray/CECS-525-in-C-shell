@@ -29,7 +29,7 @@ void putch(char ch) {
         std_putch('\b');
         std_putch(' ');
         std_putch('\b');
-    } else {
+    } else if (IS_PRINTABLE(ch)) {
         std_putch(ch);
     }
 }

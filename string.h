@@ -7,9 +7,9 @@ void *memcpy(void *dst, void *src, int num);
 void *memset(void *dst, int value, int length); // TODO: write
 int memcmp(void *a, void *b, int length); // TODO: write
 int memmove(void *a, void *b, int length); // TODO: write
-
-
 int strcmp(const char *s1, const char *s2);
+
+#define IS_PRINTABLE(ch) ((ch) >= ' ' && (ch) <= '~')
 
 #endif
 
