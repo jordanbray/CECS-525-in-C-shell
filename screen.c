@@ -38,7 +38,7 @@ void putch(char ch) {
         std_putch('\b');
         std_putch(' ');
         std_putch('\b');
-    } else {
+    } else if (IS_PRINTABLE(ch)) {
         std_putch(ch);
     }
 }
@@ -63,7 +63,7 @@ void getstr(char *str, int buffer) {
 		{
 			str[i] = ch;
 			putch(ch);
-			i++
+			i++;
 		}
 	}
 	str[i] = 0;

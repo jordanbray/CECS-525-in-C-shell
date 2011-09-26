@@ -7,7 +7,7 @@ unsigned char *blocks;
 #define CLRBIT(index) (blocks[(index)/8]&=0xff^(1<<(7 - ((index) % 8))))
 
 void kfree(void *ptr) {
-	ptr = ptr - 4;
+	ptr = ptr - 2;
 	int start_index = (((int) ptr) - MEM_START)/MEM_BLOCK_SIZE;
     int num_blocks = *((int *)ptr);
     int i;
@@ -20,10 +20,10 @@ void kfree(void *ptr) {
 void *kmalloc(int size) {
 	if (size == 0)
 		return NULL;
-	int needed_blocks = (size + 4 + MEM_BLOCK_SIZE - 1) / MEM_BLOCK_SIZE;
-	// this is the same as ceil((size+4)/MEM_BLOCK_SIZE)
+	int needed_blocks = (size + 2 + MEM_BLOCK_SIZE - 1) / MEM_BLOCK_SIZE;
+	// this is the same as ceil((size+2)/MEM_BLOCK_SIZE)
 	// the + 4 is because I prefix the pointer with the length of itself, and then
-	// just return the user the memory address + 4
+	// just return the user the memory address + 2
 	unsigned int i;
 	int best_index = 0; // best block index from the search
 	void *address = NULL;
@@ -50,8 +50,8 @@ void *kmalloc(int size) {
 	address = ((void *) (MEM_START + best_index*MEM_BLOCK_SIZE));
 	for (i = best_index; i < needed_blocks; i++)
 		SETBIT(i);
-	*((int *)address) = needed_blocks;
-	address = ((void *) ((int)address) + 4);
+	*((short *)address) = needed_blocks;
+	address = ((void *) ((int)address) + 2);
 	return address;
 }
 

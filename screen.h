@@ -2,6 +2,7 @@
 #define __SCREEN_H__
 
 #include "assembly.h"
+#include "string.h"
 
 char getch();
 void putch(char ch);
