@@ -48,6 +48,10 @@ void shell() {
 		{
 			asm ("trap #0\n");
 		}
+		else if (strcmp(ptr, "HELP"))
+		{
+			putstr("Welcome to the Kernel\n\tMEMTEST\tTest Malloc\n\tERRTEST\tTest error handling\n\tSTOP\tExit the shell\n\tHELP\tDisplay the Help\n");
+		}
 		else
 		{
 			putstr("Echo: ");
