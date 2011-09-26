@@ -7,7 +7,7 @@ struct tnode *tnode_insert(struct tnode *p, char *key, void *value) {
 	if(p == NULL) {
 		/* insert [new] tnode as root node */
 		p = (struct tnode *)kmalloc(sizeof(struct tnode));
-		p->key = key;
+		p->key = strdup(key);
 		p->value = value;
 		p->left = p->right = NULL;
 	} else {
@@ -26,14 +26,14 @@ struct tnode *tnode_insert(struct tnode *p, char *key, void *value) {
 			/* insert [new] tnode as left child */
 			tmp_two->left = (struct tnode *)kmalloc(sizeof(struct tnode));
 			tmp_two = tmp_two->left;
-			tmp_two->key = key;
+			tmp_two->key = strdup(key);
 			tmp_two->value = value;
 			tmp_two->left = tmp_two->right = NULL;
 		} else {
 			/* insert [new] tnode as left child */
 			tmp_two->right = (struct tnode *)kmalloc(sizeof(struct tnode)); 
 			tmp_two = tmp_two->right;
-			tmp_two->key = key;
+			tmp_two->key = strdup(key);
 			tmp_two->value = value;
 			tmp_two->left = tmp_two->right = NULL;
 		}
@@ -98,7 +98,7 @@ void tnode_destroy(struct tnode *p) {
 	if(p != NULL) {
 		tnode_destroy(p->left);
 		tnode_destroy(p->right);
-
+		kfree(p->key);
 		kfree(p);
 	}
 }

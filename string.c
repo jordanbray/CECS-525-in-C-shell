@@ -28,7 +28,7 @@ void *memset(void *dst, int value, int length) {
 		*p++ = (unsigned char)value;
 	}
 
-	return s;
+	return dst;
 }
 
 int strcmp(const char *s1, const char *s2)

@@ -1,6 +1,7 @@
 #include "screen.h"
 #include "kmem.h"
 #include "string.h"
+#include "tree.h"
 
 void *test_malloc(int bytes) {
 	void *ptr = kmalloc(bytes);
@@ -24,6 +25,23 @@ void memtest() {
     test_free(p1);
     test_free(p2);
     test_free(p3);
+}
+
+void test_tree() {
+    struct tnode *root = NULL;
+    root = tnode_insert(root, "one", ((void*)1));
+    root = tnode_insert(root, "two", ((void*)2));
+    root = tnode_insert(root, "three", ((void*)3));
+    root = tnode_insert(root, "four", ((void*)4));
+    root = tnode_insert(root, "five", ((void*)5));
+    root = tnode_insert(root, "negative 1", (void*)-1);
+    struct tnode *node = tnode_search(root, "four");
+    if (((int *)node->value) == ((int *)4))
+        putstr("SUCCESS\n");
+    else
+        putstr("FAILURE\n");
+    tnode_destroy(root);
+
 }
 
 void shell() {
@@ -53,7 +71,10 @@ void shell() {
 		{
 			putstr("Welcome to the Kernel\n\tmemtest\tTest Malloc\n\terrtest\tTest error handling\n\tstop\tExit the shell\n\thelp\tDisplay the Help\n");
 		}
-		else
+		else if (!strcmp(ptr, "tree"))
+        {
+            test_tree();
+        }
 		{
 			putstr("Echo: ");
 			putstr(ptr);
