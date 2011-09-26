@@ -29,19 +29,23 @@ void *kmalloc(int size) {
 	for (i = 0; i < MEM_BITSET_BITS; i++) {
 		if (GETBIT(i)) { // found a used block
 			if (blocks_inside_free_block >= needed_blocks &&
-			    blocks_inside_free_block < best_length) {
+				blocks_inside_free_block < best_length) {
+				putstr("Found a working block\n");
 				best_index = i - blocks_inside_free_block;
 				best_length = blocks_inside_free_block;
 			}
 			blocks_inside_free_block = 0;
 		} else { // found a free block
+			putstr("Found a free block\n");
 			blocks_inside_free_block++;
 		}
 	}
 	// all blocks checked, and smallest available block that fits size in it
 	// has been chosen
-	if (best_length == 0x7fffffff)
+	if (best_length == 0x7fffffff) {
+		putstr("No memory left!\n");
 		return NULL; // no blocks available
+	}
 	address = ((void *) (MEM_START + best_index*MEM_BLOCK_SIZE));
 	for (i = best_index; i < needed_blocks; i++)
 		SETBIT(i);
@@ -58,11 +62,6 @@ void kmeminit() {
 		SETBIT(i);
 	for (; i < MEM_BITSET_BITS; i++)
 		CLRBIT(i);
-	blocks[0] = 0x42;
-	puthexint(blocks[0]);
-	putch('\n');
-	if (blocks[0] & (1 << 7))
-		putstr("Bit 0 is set\n");
-	else
-		putstr("Bit 0 is unset\n");
+	SETBIT(MEM_BITSET_BITS-1); // wasting 128 bytes of memory because otherwise
+	// my poorly written kmalloc crashes :(
 }

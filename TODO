@@ -5,7 +5,7 @@ implement rest of MMONITOR, in particular:
 		@ We may need to search for a kalloc or kmalloc for kernel
 		  memory allocation.
 	* implement his commands
-	
+	* finish the string functions defined in string.h
 
 
 Maybe search for a full simple c library.  Jimmy said something about newlib 
