@@ -14,12 +14,21 @@ char *strdup(const char *s) {
 }
 
 void *memcpy(void *dst, void *src, int num) {
-	char *cd = ((char *)dst);
-	char *cs = ((char *)src);
-	int i;
-	for (i = 0; i < num; i++)
-		cd[i] = cs[i];
+	char *dp = dst;
+	const char *sp = src;
+	while (num--) {
+		*dp++ = *sp++;
+	}
 	return dst;
+}
+
+void *memset(void *dst, int value, int length) {
+	unsigned char *p=dst;
+	while(length--) {
+		*p++ = (unsigned char)value;
+	}
+
+	return s;
 }
 
 int strcmp(const char *s1, const char *s2)
