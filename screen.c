@@ -25,17 +25,21 @@ void putstr(const char *str) {
     }
 }
 
-void real_putch(char ch) {
+void std_putch(char ch) {
 	while (!(acia->control & STATUS_TDRE)); //Wait for transmit register empty
 	acia->data = ch; //Write character
 }
 
 void putch(char ch) {
     if (ch == '\n') {
-        real_putch('\r');
-        real_putch('\n');
+        std_putch('\r');
+        std_putch('\n');
+    } else if (ch == '\b') {
+        std_putch('\b');
+        std_putch(' ');
+        std_putch('\b');
     } else {
-        real_putch(ch);
+        std_putch(ch);
     }
 }
 
