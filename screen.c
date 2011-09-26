@@ -3,6 +3,7 @@
 /**
  * ACIA serial controler
  * */
+ 
 typedef struct {
 	char pad1;
 	char control;
@@ -11,6 +12,11 @@ typedef struct {
 } acia_t;
 
 volatile acia_t *const acia = (acia_t *)0x8000;
+
+void initialize_acia() {
+	acia->control = 0x3;
+	acia->control = 0x19;
+}
 
 void std_putch(char ch) {
 	while (!(acia->control & STATUS_TDRE)); //Wait for transmit register empty
@@ -59,7 +65,7 @@ void putch(char ch) {
         std_putch('\b');
         std_putch(' ');
         std_putch('\b');
-    } else if (IS_PRINTABLE(ch)) {
+    } else if (IS_PRINTABLE(ch) || ch == '\t') {
         std_putch(ch);
     }
 }

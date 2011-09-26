@@ -62,7 +62,7 @@ void shell() {
 }
 
 void main() {
-	__asm_initialize__();
+	initialize_acia();
 	kmeminit();
 	
 	shell();
