@@ -4,7 +4,7 @@
 #include "screen.h"
 #include "string.h"
 
-#define BUF_LEN (32)
+#define BUF_LEN (64)
 
 typedef void (*shell_func)(int, const char**);
 
