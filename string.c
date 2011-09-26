@@ -10,9 +10,7 @@ int strlen(const char *s) {
 char *strdup(const char *s) {
 	int len = strlen(s);
 	char *ret = kmalloc(len + 1);
-	int i;
-	for (i = 0; i <= len; i++) // <= to copy the 0
-		ret[i] = s[i];
+	return memcpy(ret, s, len+1);
 }
 
 void *memcpy(void *dst, void *src, int num) {
