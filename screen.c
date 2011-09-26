@@ -20,13 +20,23 @@ volatile acia_t *const acia = (acia_t *)0x8000;
 
 void putstr(const char *str) {
 	int i;
-	for (i = 0; str[i] != 0; i++)
+	for (i = 0; str[i] != 0; i++) {
 		putch(str[i]);
+    }
+}
+
+void real_putch(char ch) {
+	while (!(acia->control & STATUS_TDRE)); //Wait for transmit register empty
+	acia->data = ch; //Write character
 }
 
 void putch(char ch) {
-	while (!(acia->control & STATUS_TDRE)); //Wait for transmit register empty
-	acia->data = ch; //Write character
+    if (ch == '\n') {
+        real_putch('\r');
+        real_putch('\n');
+    } else {
+        real_putch(ch);
+    }
 }
 
 void getstr(char *str, int buffer) {

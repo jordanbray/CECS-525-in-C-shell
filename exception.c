@@ -6,4 +6,5 @@
 void __attribute__ ((interrupt)) excep_undef(void)
 {
 	putstr("Unhandled exception!\n");
+    main();
 }
