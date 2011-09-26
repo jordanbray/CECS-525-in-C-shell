@@ -1,6 +1,6 @@
-#include "assembly.h"
 #include "screen.h"
 #include "kmem.h"
+#include "string.h"
 
 void *test_malloc(int bytes) {
 	void *ptr = kmalloc(bytes);
@@ -35,23 +35,23 @@ void shell() {
 	{
 		putstr("> ");
 		getstr(ptr, 64);
-		if (strcmp(ptr, "STOP"))
+		if (strcmp(ptr, "stop") == 0)
 		{
 			putstr("Exiting...\n");
 			return;
 		}
-		else if (strcmp(ptr, "MEMTEST"))
+		else if (strcmp(ptr, "memtest") == 0)
 		{
 			putstr("Performing Memory Test\n");
 			memtest();
 		}
-		else if (strcmp(ptr, "ERRTEST"))
+		else if (strcmp(ptr, "errtest") == 0)
 		{
 			asm ("trap #0\n");
 		}
-		else if (strcmp(ptr, "HELP"))
+		else if (strcmp(ptr, "help") == 0)
 		{
-			putstr("Welcome to the Kernel\n\tMEMTEST\tTest Malloc\n\tERRTEST\tTest error handling\n\tSTOP\tExit the shell\n\tHELP\tDisplay the Help\n");
+			putstr("Welcome to the Kernel\n\tmemtest\tTest Malloc\n\terrtest\tTest error handling\n\tstop\tExit the shell\n\thelp\tDisplay the Help\n");
 		}
 		else
 		{
@@ -63,7 +63,7 @@ void shell() {
 }
 
 void main() {
-	__asm_initialize__();
+	initialize_acia();
 	kmeminit();
 	
 	shell();

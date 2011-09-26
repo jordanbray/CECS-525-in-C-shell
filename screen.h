@@ -1,7 +1,6 @@
 #ifndef __SCREEN_H__
 #define __SCREEN_H__
 
-#include "assembly.h"
 #include "string.h"
 
 #define STATUS_IRQ      (1 << 7)
@@ -13,10 +12,13 @@
 #define STATUS_TDRE     (1 << 1)
 #define STATUS_RDRF     (1 << 0)
 
-char getch();
-void putch(char ch);
-void getstr(char *str, int buffer);
-void putstr(const char *str);
+void initialize_acia();
+
 void puthexint(int i);
+void putstr(const char *str);
+void putch(char ch);
+
+void getstr(char *str, int buffer);
+char getch();
 
 #endif
