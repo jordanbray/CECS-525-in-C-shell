@@ -1,5 +1,8 @@
 #include "screen.h"
 
+/**
+ * ACIA serial controler
+ * */
 typedef struct {
 	char pad1;
 	char control;
@@ -9,16 +12,43 @@ typedef struct {
 
 volatile acia_t *const acia = (acia_t *)0x8000;
 
+void std_putch(char ch) {
+	while (!(acia->control & STATUS_TDRE)); //Wait for transmit register empty
+	acia->data = ch; //Write character
+}
+
+char std_getch() {
+	char ch;
+	while (!(acia->control & STATUS_RDRF)); //Wait for transmit register empty
+	return acia->data; //Read character
+	return ch;
+}
+
+/**
+ * Utility Functions
+ * */
+
+void puthexint(int input) {
+	char hex[] = "00000000";
+	int i;
+	for (i = 0; i < 8; i++) {
+		hex[7-i] = (char) (input & 0xf);
+		input >>= 4;
+		if (hex[7-i] <= 9)
+			hex[7-i] += '0';
+		else
+			hex[7-i] += 'a' - 10;
+	}
+	putstr("0x");
+	for (i = 0; hex[i] == '0' && i < 7; i++);
+	for (;i < 8; i++)putch(hex[i]);
+}
+
 void putstr(const char *str) {
 	int i;
 	for (i = 0; str[i] != 0; i++) {
 		putch(str[i]);
     }
-}
-
-void std_putch(char ch) {
-	while (!(acia->control & STATUS_TDRE)); //Wait for transmit register empty
-	acia->data = ch; //Write character
 }
 
 void putch(char ch) {
@@ -64,24 +94,5 @@ void getstr(char *str, int buffer) {
 }
 
 char getch() {
-	char ch;
-	__asm_getch__();
-	asm("move.b %%d0, %0\n" :"=r"(ch));
-	return ch;
-}
-
-void puthexint(int input) {
-	char hex[] = "00000000";
-	int i;
-	for (i = 0; i < 8; i++) {
-		hex[7-i] = (char) (input & 0xf);
-		input >>= 4;
-		if (hex[7-i] <= 9)
-			hex[7-i] += '0';
-		else
-			hex[7-i] += 'a' - 10;
-	}
-	putstr("0x");
-	for (i = 0; hex[i] == '0' && i < 7; i++);
-	for (;i < 8; i++)putch(hex[i]);
+	return std_getch();
 }
