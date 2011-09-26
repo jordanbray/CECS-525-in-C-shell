@@ -21,6 +21,10 @@ tree.o:	string.h tree.h tree.c kmem.h
 
 string.o: string.h string.c
 	${CC} ${CFLAGS} -c string.c -o string.o
+
+shell.o: shell.h shell.c
+	${CC} ${CFLAGS} -c shell.c -o shell.o
+
 disassemble: main
 	${OBJDUMP} -D attach_gdb_to_this
 
