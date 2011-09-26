@@ -23,7 +23,7 @@ tree.o:	string.h tree.h tree.c kmem.h
 string.o: string.h string.c
 	${CC} ${CFLAGS} -c string.c -o string.o
 
-shell.o: shell.h shell.c
+shell.o: shell.h shell.c string.h screen.h
 	${CC} ${CFLAGS} -c shell.c -o shell.o
 
 iv.o: iv.asm
