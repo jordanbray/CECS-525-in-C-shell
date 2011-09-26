@@ -83,9 +83,9 @@ void getstr(char *str, int buffer) {
 		{
 			break;
 		}
-		else if (ch == '\b')
+		else if (ch == '\b' || ch == 127)
 		{
-			putch(ch);
+			putch('\b');
 			i--;
 		}
 		else if (IS_PRINTABLE(ch))

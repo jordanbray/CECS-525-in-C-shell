@@ -50,7 +50,7 @@ void shell() {
 		}
 		else if (strcmp(ptr, "help") == 0)
 		{
-			putstr("Welcome to the Kernel\n\tMEMTEST\tTest Malloc\n\tERRTEST\tTest error handling\n\tSTOP\tExit the shell\n\tHELP\tDisplay the Help\n");
+			putstr("Welcome to the Kernel\n\tmemtest\tTest Malloc\n\terrtest\tTest error handling\n\tstop\tExit the shell\n\thelp\tDisplay the Help\n");
 		}
 		else
 		{
