@@ -11,7 +11,6 @@ CFLAGS+=-Os
 
 main: assembly.o iv.o screen.o main.o exception.o linker.x kmem.o string.o tree.o
 	${LD} main.o assembly.o iv.o screen.o exception.o kmem.o string.o tree.o -o main -T linker.x -Map main.map
-main: iv.o screen.o main.o exception.o linker.x kmem.o string.o
 	${LD} main.o iv.o screen.o exception.o kmem.o string.o -o main -T linker.x -Map main.map
 	cp main attach_gdb_to_this
 	${OBJCOPY} -O srec main
