@@ -14,4 +14,6 @@ void add_cmd(const char *cmd, shell_func func);
 shell_func get_cmd(const char *cmd);
 void tab_complete(char *cmd);
 char **list_commands(char *cmd);
+char **parse_parameters(char *params);
+
 #endif
