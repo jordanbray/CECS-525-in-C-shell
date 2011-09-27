@@ -6,6 +6,24 @@
 
 #include"md5.h"
 
+unsigned f0( unsigned abcd[] ){
+    return ( abcd[1] & abcd[2]) | (~abcd[1] & abcd[3]);
+}
+ 
+unsigned f1( unsigned abcd[] ){
+    return ( abcd[3] & abcd[1]) | (~abcd[3] & abcd[2]);
+}
+ 
+unsigned f2( unsigned abcd[] ){
+    return  abcd[1] ^ abcd[2] ^ abcd[3];
+}
+ 
+unsigned f3( unsigned abcd[] ){
+    return abcd[2] ^ (abcd[1] |~ abcd[3]);
+}
+ 
+typedef unsigned (*DgstFctn)(unsigned a[]);
+
 void *md5(const char *mem, int length) {
 	static Digest h0 = { 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476 };
 	static DgstFctn ff[] = { &f0, &f1, &f2, &f3 };
