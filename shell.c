@@ -2,37 +2,6 @@
 
 struct tnode *root;
 
-void getcmd(char *str, int buffer) {
-	int i =0;
-	char ch;
-	
-	while (i < buffer-2)
-	{
-		str[i] = 0;
-		
-		ch = getch();
-		if (ch == '\r') //if enter key is hit stop
-		{
-			break;
-		}
-		else if (ch == '\b' || ch == 127)
-		{
-			putch('\b');
-			i--;
-		}
-		else if (IS_PRINTABLE(ch))
-		{
-			str[i] = ch;
-			putch(ch);
-			i++;
-		}
-	}
-	str[i] = 0;
-	putch('\n');
-}
-
-
-
 void tab_complete(char *command, int *length) {
     struct tnode *node = tnode_startswith(root, command);
     struct tnode *min = tnode_searchmin(node);
@@ -99,7 +68,7 @@ void shell() {
 		else
 		{
 			argc = i;
-			//argv = parse_parameters(str, &argc);
+			argv = parse_parameters(str, &argc);
 			func = get_cmd(argv[0]);
 			if (func == NULL)
 			{
