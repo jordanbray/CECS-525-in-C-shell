@@ -17,6 +17,7 @@
 #include "shell.h"
 #include "tree.h"
 #include "commands/commands.h"
+#include "auth/authentication.h"
 
 //Function to test our implementation of malloc
 void *test_malloc(int bytes) {
@@ -69,7 +70,28 @@ void main() {
 	//Init kernel memory
 	kmeminit();
 	
-	//TODO: Implement a login of some kind
+	//Login
+	initAuth();
+	//Add users
+	struct shellUser *testUser = kmalloc(sizeof(struct shellUser));
+	char *username = "test";
+	char *password = "password";
+	testUser->username = username;
+	testUser->password = password;
+	addUser(testUser);
+
+	//Welcome message
+	putstr("Welcome to the CECS525 C shell!\nPlease login...\n");
+
+	//Check login
+	char *user = kmalloc((sizeof(char)*30)+1);
+	char *pass = kmalloc((sizeof(char)*30)+1);
+	do {
+		putstr("Username: ");
+		getstr(user, 30);
+		putstr("Password: ");
+		getstr(pass, 30);
+	} while (checkLogin(user, pass) != 1);
 	
 	//Begin the shell
 	shell();
