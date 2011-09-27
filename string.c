@@ -112,3 +112,13 @@ int strcmp(const char *s1, const char *s2)
 	}
     return *(unsigned char *)s1 < *(unsigned char *)s2 ? -1 : 1;
 }
+
+char *strcpy(char *destination, const char *source) {
+	int i, len = strlen(source);
+	for (i=0;i<len;i++) {
+		destination[i] = source[i];
+	}
+	destination[len+1] = 0;
+
+	return destination;
+}

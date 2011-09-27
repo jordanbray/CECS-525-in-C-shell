@@ -11,6 +11,7 @@ void *memset(void *dst, int value, int length);
 int memcmp(const void* s1, const void* s2, int n);
 void *memmove(void *dest, const void *src, int n);
 int strcmp(const char *s1, const char *s2);
+char *strcpy(char *destination, const char* source);
 int strstartswith(const char *str, const char *start);
 char *match_beginning(const char *s1, const char *s2);
 

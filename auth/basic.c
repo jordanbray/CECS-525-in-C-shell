@@ -18,7 +18,8 @@ int addUser(char* username, char* password) {
 	struct shellUser *newUser = kmalloc(sizeof(struct shellUser));
 
 	//Encrypt the user's password for storage
-	char *encpass = password;
+	char *encpass = kmalloc((sizeof(char)*strlen(password))+1);
+	strcpy(encpass, password);
 	encpass = memfrob(encpass, strlen(encpass));
 
 	//Add info to struct
@@ -75,13 +76,6 @@ int checkLogin(char *username, char *password) {
 
 	//Encrypt user inputted password to check against stored pass
 	password = memfrob(password, strlen(password));
-
-	//Debug
-	putstr("\nChecking user login...\nInput password: ");
-	putstr(password);
-	putstr("\nUser's password: ");
-	putstr(theUser->password);
-	putstr("\n");
 
 	if (theUser->invalidLogin > AUTH_MAX_LOGINS)
 		return 0;
