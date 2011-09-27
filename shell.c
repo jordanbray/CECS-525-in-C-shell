@@ -19,7 +19,7 @@ void tab_complete(char *command, int *length) {
 
 void shell() {
 	char **argv, str[BUF_LEN], ch;
-	int i, argc;
+	int i, j, argc;
 	root = NULL;
     initialize_commands();
 	shell_func func;
@@ -32,7 +32,9 @@ void shell() {
 		putstr("> ");
 		
 		while (i < BUF_LEN-1)
-		{			
+		{
+			str[i] = 0;
+			
 			ch = getch();
 			if (ch == '\r') //if enter key is hit stop
 			{
@@ -48,7 +50,12 @@ void shell() {
 			}
 			else if (ch == '\t')
 			{
-				tab_complete(str, &i);
+				j = i;
+				tab_complete(str, &j);
+				for (; i < j; i++)
+				{
+					putch(str[i]);
+				}
 			}
 			else if (IS_PRINTABLE(ch))
 			{

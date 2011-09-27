@@ -74,8 +74,10 @@ void getstr(char *str, int buffer) {
 	int i=0;
 	char ch;
 	
-	while (i < buffer-2)
-	{		
+	while (i < buffer-1)
+	{
+		str[i] = 0;
+		
 		ch = getch();
 		if (ch == '\r') //if enter key is hit stop
 		{
