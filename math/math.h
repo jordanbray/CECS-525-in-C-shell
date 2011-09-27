@@ -5,5 +5,7 @@
  * M68K Math Library
  */
 
+#include"abs.h"
+#include"spow.h"
 
 #endif

@@ -26,7 +26,7 @@ void main() {
 
 	//Init kernel memory
 	kmeminit();
-	
+
 	//Login
 	initAuth();
 	//Add users
