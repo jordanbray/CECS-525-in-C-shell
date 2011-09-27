@@ -117,7 +117,7 @@ void add_cmd(const char *cmd, shell_func func) {
 
 shell_func get_cmd(const char *cmd) {
 	shell_func theFunc;
-	tnode *cmd = tnode_search(root, cmd);
-	theFunc = cmd->value;
+	struct tnode *cmd_node = tnode_search(root, cmd);
+	theFunc = cmd_node->value;
 	return theFunc;
 }
