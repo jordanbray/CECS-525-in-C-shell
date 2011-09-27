@@ -9,4 +9,5 @@ int echo(int argc, const char** argv) {
 		putstr(argv[i]);
 		putch(' ');
 	}
+	putch('\n');
 }
