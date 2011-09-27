@@ -8,13 +8,13 @@
 
 #define BUF_LEN (64)
 
-typedef void (*shell_func)(int, const char**);
+typedef int (*shell_func)(int, const char**);
 
 void shell();
 void add_cmd(const char *cmd, shell_func func);
 shell_func get_cmd(const char *cmd);
 void tab_complete(char *cmd, int *length);
 char **list_commands(char *cmd);
-char **parse_parameters(char *params);
+char **parse_parameters(char *params, int *length);
 
 #endif
