@@ -71,13 +71,11 @@ void putch(char ch) {
 }
 
 void getstr(char *str, int buffer) {
-	int i =0;
+	int i=0;
 	char ch;
 	
 	while (i < buffer-2)
-	{
-		str[i] = 0;
-		
+	{		
 		ch = getch();
 		if (ch == '\r') //if enter key is hit stop
 		{
@@ -85,8 +83,11 @@ void getstr(char *str, int buffer) {
 		}
 		else if (ch == '\b' || ch == 127)
 		{
-			putch('\b');
-			i--;
+			if (i > 0)
+			{
+				putch('\b');
+				i--;
+			}
 		}
 		else if (IS_PRINTABLE(ch))
 		{
@@ -95,6 +96,7 @@ void getstr(char *str, int buffer) {
 			i++;
 		}
 	}
+	
 	str[i] = 0;
 	putch('\n');
 }

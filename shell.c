@@ -3,21 +3,20 @@
 struct tnode *root;
 
 void shell() {
-	char cmd[BUF_LEN];
-	int i=0;
-	char ch;
+	char str[BUF_LEN], ch;
+	int i;
+	root = NULL;
 	shell_func func;
 	
 	putstr("Welcome to the (unstable) C Kernel\n");
 	
 	while(1)
 	{
+		i=0;
 		putstr("> ");
 		
-		while (i < buffer-2)
-		{
-			cmd[i] = 0;
-			
+		while (i < BUF_LEN-1)
+		{			
 			ch = getch();
 			if (ch == '\r') //if enter key is hit stop
 			{
@@ -37,13 +36,16 @@ void shell() {
 			}
 			else if (IS_PRINTABLE(ch))
 			{
-				cmd[i] = ch;
+				str[i] = ch;
 				putch(ch);
 				i++;
 			}
-		}		
+		}
 		
-		if (strcmp(ptr, "exit") == 0)
+		str[i] = 0;
+		putch('\n');
+		
+		if (strcmp(str, "exit") == 0)
 		{
 			putstr("Exiting...\n");
 			return;
@@ -53,10 +55,12 @@ void shell() {
 			func = get_cmd(str);
 			if (func == NULL)
 			{
-				putstr("Invalid Command");
+				putstr("Invalid Command: ");
+				putstr(str);
+				putch('\n');
 			}
 		}
-		
-		putch('\n');
 	}
+	
+	tnode_destroy(root);
 }
