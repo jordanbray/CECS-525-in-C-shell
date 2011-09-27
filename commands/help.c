@@ -14,4 +14,11 @@ int help(int argc, const char** argv) {
 	}
 
 	//Looking for all the commands
+	putstr("Available commands:\n");
+
+	//Do some looping of some kind
+	//Output each command
+
+	//Done
+	return 0;
 }
