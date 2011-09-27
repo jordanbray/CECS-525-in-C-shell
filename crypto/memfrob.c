@@ -4,13 +4,13 @@
 
 #include"memfrob.h"
 
-void *memfrob(unsigned char *mem, int length) {
+void *memfrob(void *mem, int length) {
 	int i;
-	unsigned char *enc_mem = kmalloc(length);
+	unsigned char *memory = (unsigned char*)mem;
 
 	for (i=0;i<length;i++) {
-		enc_mem[i] = mem[i] ^ 0x26;
+		memory[i] = memory[i] ^ 0x26;
 	}
 
-	return enc_mem;
+	return memory;
 }
