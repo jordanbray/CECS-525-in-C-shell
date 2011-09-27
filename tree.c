@@ -61,6 +61,7 @@ struct tnode *tnode_search(struct tnode *p, char *key) {
 
 	while(temp != NULL) {
 		int compare = strcmp(temp->key, key);
+
 		if(!compare)
 			return temp;
 		else if(compare == 1)
@@ -70,6 +71,22 @@ struct tnode *tnode_search(struct tnode *p, char *key) {
 	}
 
 	return NULL;
+}
+
+struct tnode *tnode_startswith(struct tnode *p, char *key) {
+    struct tnode *temp;
+    temp = p;
+
+    while (temp != NULL) {
+        int compare = strstartswith(temp->key, key);
+        if (!compare)
+            return temp;
+        else if (compare == 1)
+            temp = temp->left;
+        else
+            temp = temp->right;
+    }
+    return NULL;
 }
 
 /* locate a minimum value in the btree */

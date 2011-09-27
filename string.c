@@ -1,5 +1,29 @@
 #include "string.h"
 
+int strstartswith(const char *str, const char *start) {
+    while (*str == *start && *str) {
+        str++;
+        start++;
+    }
+    if (!*str)
+        return 0;
+    return *(unsigned char *)str < *(unsigned char *)start ? -1 : 1;
+}
+
+char *match_beginning(const char *s1, const char *s2) {
+    int s1len = strlen(s1);
+    int s2len = strlen(s2);
+    int len = s1len < s2len ? s1len : s2len;
+    char *ret = kmalloc(len);
+    int i;
+    for (i = 0; i < len && s1[i] == s2[i]; i++) {
+        ret[i] = s1[i];
+    }
+    ret[i] = 0;
+    return ret;
+}
+
+
 int strlen(const char *s) {
 	const char *old = s;
 	while (*s) {
@@ -11,10 +35,10 @@ int strlen(const char *s) {
 char *strdup(const char *s) {
 	int len = strlen(s);
 	char *ret = kmalloc(len + 1);
-	return memcpy(ret, s, len+1);
+	return memcpy(ret, (void *) s, len+1);
 }
 
-void *memcpy(void *dst, void *src, int num) {
+void *memcpy(void *dst, const void *src, int num) {
 	char *dp = dst;
 	const char *sp = src;
 	while (num--) {
@@ -46,10 +70,10 @@ int memcmp(const void* s1, const void* s2,int n)
 	return 0;
 }
 
-void *mymove(void *dst, const void *src, int size)
+void *memmove(void *dst, const void *src, int size)
 {
     char **to = dst;
-    const char **from = src;
+    const char **from = (const char **) src;
     int i,diff;
     
     if(*from==*to)

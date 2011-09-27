@@ -32,6 +32,22 @@ void getcmd(char *str, int buffer) {
 }
 
 
+
+void tab_complete(char *command, int *length) {
+    struct tnode *node = tnode_startswith(root, command);
+    struct tnode *min = tnode_searchmin(node);
+    struct tnode *max = tnode_searchmax(node);
+    char *all = match_beginning(min->key, max->key);
+    int i;
+    int len = strlen(all);
+    for (i = *length; i < *length + len; i++) {
+        command[i] = all[i-*length];
+    }
+    command[i] = 0;
+    *length = *length + len;
+    kfree(all);
+}
+
 void shell() {
 	char ptr[BUF_LEN];
 	
