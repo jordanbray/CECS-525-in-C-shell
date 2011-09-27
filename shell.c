@@ -49,8 +49,8 @@ void tab_complete(char *command, int *length) {
 }
 
 void shell() {
-	char str[BUF_LEN], ch;
-	int i;
+	char **argv, str[BUF_LEN], ch;
+	int i, argc;
 	root = NULL;
 	shell_func func;
 	
@@ -58,7 +58,7 @@ void shell() {
 	
 	while(1)
 	{
-		i=0;
+		i = 0;
 		putstr("> ");
 		
 		while (i < BUF_LEN-1)
@@ -98,13 +98,21 @@ void shell() {
 		}
 		else
 		{
-			func = get_cmd(str);
+			argc = i;
+			//argv = parse_parameters(str, &argc);
+			func = get_cmd(argv[0]);
 			if (func == NULL)
 			{
 				putstr("Invalid Command: ");
-				putstr(str);
+				putstr(argv[0]);
 				putch('\n');
 			}
+			else
+			{
+				func(argc, argv);
+			}
+			
+			kfree(argv);
 		}
 	}
 	
