@@ -38,6 +38,31 @@ char std_getch() {
  * Utility Functions
  * */
 
+void putshort(short input) {
+	char buff[5];
+	int i = 0;
+	int isNeg = (input < 0);
+	
+	if (isNeg)
+	{
+		putch('-');
+		input *= -1;
+	}
+	
+	do
+	{
+		buff[i] = (input % 10) + 48;
+		input /= 10;
+		i++;
+	}
+	while (input > 0);
+	
+	for (; i >=0; i--)
+	{
+		putch(buff[i]);
+	}
+}
+
 void puthexint(int input) {
 	char hex[] = "00000000";
 	int i;

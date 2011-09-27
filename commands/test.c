@@ -43,6 +43,16 @@ void test_tree() {
 
 }
 
+void test_strings()
+{
+	putshort(100);
+	putch('\n');
+	putshort(12345);
+	putch('\n');
+	putshort(-500);
+	putch('\n');
+}
+
 int test(int argc, const char** argv)
 {
 	int i;
@@ -50,13 +60,18 @@ int test(int argc, const char** argv)
 	{
 		if (strcmp("mem", argv[i]) == 0)
 		{
-			putstr("\n****Testing Memory****\n");
+			putstr("****Testing Memory****\n");
 			memtest();
 		}
 		else if(strcmp("tree", argv[i]) == 0)
 		{
-			putstr("\n****Testing Binary Tree****\n");
+			putstr("****Testing Binary Tree****\n");
 			test_tree();
+		}
+		if (strcmp("str", argv[i]) == 0)
+		{
+			putstr("****Testing String Conversion****\n");
+			test_strings();
 		}
 	}
 }
