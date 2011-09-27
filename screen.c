@@ -1,3 +1,7 @@
+/*
+ * This file handles the input/output to the screen
+ */
+
 #include "screen.h"
 
 /**

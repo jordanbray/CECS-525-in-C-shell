@@ -1,4 +1,9 @@
+/*
+ * Binary tree implementation for M68K
+ */
+
 #include "tree.h"
+
 /* insert a tnode into the binary tree */
 struct tnode *tnode_insert(struct tnode *p, const char *key, void *value) {
 	struct tnode *tmp_one = NULL;

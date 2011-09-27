@@ -1,3 +1,12 @@
+/*
+ * 68K Shell
+ *
+ * Features:
+ * Tab completion
+ * Easily add functions
+ * More to come...
+ */
+
 #include "shell.h"
 
 struct tnode *root;

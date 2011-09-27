@@ -1,3 +1,7 @@
+/*
+ * String functions, and some memory movement functions
+ */
+
 #include "string.h"
 
 int strstartswith(const char *str, const char *start) {
