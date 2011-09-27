@@ -108,7 +108,8 @@ char **parse_parameters(char *params, int *length) {
         if (params[i] == ' ')
             space_count++;
     char **ret = kmalloc(space_count+1);
-    int index = 0;
+    ret[0] = params;
+    int index = 1;
     for (i = 0; i < *length; i++) {
         if (params[i] == ' ') {
             params[i] = '\0';

@@ -3,6 +3,7 @@
 #include "string.h"
 #include "shell.h"
 #include "tree.h"
+#include "commands/commands.h"
 
 void *test_malloc(int bytes) {
 	void *ptr = kmalloc(bytes);
@@ -47,6 +48,7 @@ void test_tree() {
 
 void main() {
 	initialize_acia();
+    initialize_commands();
 	kmeminit();
 	
 	shell();
