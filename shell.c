@@ -49,37 +49,75 @@ void tab_complete(char *command, int *length) {
 }
 
 void shell() {
-	char ptr[BUF_LEN];
+	char str[BUF_LEN], ch;
+	int i;
+	root = NULL;
+	shell_func func;
 	
 	putstr("Welcome to the (unstable) C Kernel\n");
 	
 	while(1)
 	{
+		i=0;
 		putstr("> ");
-		getcmd(ptr, BUF_LEN);
-		if (strcmp(ptr, "stop") == 0)
+		
+		while (i < BUF_LEN-1)
+		{			
+			ch = getch();
+			if (ch == '\r') //if enter key is hit stop
+			{
+				break;
+			}
+			else if (ch == '\b' || ch == 127)
+			{
+				if (i > 0)
+				{
+					putch('\b');
+					i--;
+				}
+			}
+			else if (ch == '\t')
+			{
+				tab_complete(str, &i);
+			}
+			else if (IS_PRINTABLE(ch))
+			{
+				str[i] = ch;
+				putch(ch);
+				i++;
+			}
+		}
+		
+		str[i] = 0;
+		putch('\n');
+		
+		if (strcmp(str, "exit") == 0)
 		{
 			putstr("Exiting...\n");
 			return;
 		}
-		else if (strcmp(ptr, "memtest") == 0)
-		{
-			putstr("Performing Memory Test\n");
-			memtest();
-		}
-		else if (strcmp(ptr, "errtest") == 0)
-		{
-			asm ("trap #0\n");
-		}
-		else if (strcmp(ptr, "help") == 0)
-		{
-			putstr("Welcome to the Kernel\n\tmemtest\tTest Malloc\n\terrtest\tTest error handling\n\tstop\tExit the shell\n\thelp\tDisplay the Help\n");
-		}
 		else
 		{
-			putstr("Echo: ");
-			putstr(ptr);
-			putch('\n');
+			func = get_cmd(str);
+			if (func == NULL)
+			{
+				putstr("Invalid Command: ");
+				putstr(str);
+				putch('\n');
+			}
 		}
 	}
+	
+	tnode_destroy(root);
+}
+
+void add_cmd(const char *cmd, shell_func func) {
+	root = tnode_insert(root, cmd, func);
+}
+
+shell_func get_cmd(const char *cmd) {
+	shell_func theFunc;
+	tnode *cmd = tnode_search(root, cmd);
+	theFunc = cmd->value;
+	return theFunc;
 }

@@ -5,7 +5,7 @@
 #include "string.h"
 #include "tree.h"
 
-#define BUF_LEN (32)
+#define BUF_LEN (10)
 
 typedef void (*shell_func)(int, const char**);
 
