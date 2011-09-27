@@ -7,6 +7,7 @@
 
 #include<string.h>
 #include<kmem.h>
+#include<crypto/crypto.h>
 
 //Remember: this is 0 indexed
 #define AUTH_MAX_LOGINS (2)
