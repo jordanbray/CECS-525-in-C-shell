@@ -6,6 +6,7 @@
  */
 
 #include<string.h>
+#include<kmem.h>
 
 #define AUTH_MAX_LOGINS (3)
 
@@ -15,13 +16,13 @@ struct shellUser {
 	int invalidLogin;
 };
 
-struct userList {
+struct userNode {
 	struct shellUser *userInfo;
-	struct userList *nextUser;
+	struct userNode *nextUser;
 };
 
 void *initAuth();
-int addUser(struct shellUser *newUser);
+int addUser(char* username, char* password);
 struct shellUser *findUser(char *username);
 int checkLogin(char *username, char *password);
 void *resetUser(char *username);

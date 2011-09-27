@@ -33,8 +33,6 @@ void shell() {
     initialize_commands();
 	shell_func func;
 	
-	putstr("Welcome to the (unstable) C Kernel\n");
-	
 	while(1)
 	{
 		i = 0;
