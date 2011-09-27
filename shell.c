@@ -64,3 +64,14 @@ void shell() {
 	
 	tnode_destroy(root);
 }
+
+void add_cmd(const char *cmd, shell_func func) {
+	root = tnode_insert(root, cmd, func);
+}
+
+shell_func get_cmd(const char *cmd) {
+	shell_func theFunc;
+	tnode *cmd = tnode_search(root, cmd);
+	theFunc = cmd->value;
+	return theFunc;
+}
