@@ -2,37 +2,6 @@
 
 struct tnode *root;
 
-void getcmd(char *str, int buffer) {
-	int i =0;
-	char ch;
-	
-	while (i < buffer-2)
-	{
-		str[i] = 0;
-		
-		ch = getch();
-		if (ch == '\r') //if enter key is hit stop
-		{
-			break;
-		}
-		else if (ch == '\b' || ch == 127)
-		{
-			putch('\b');
-			i--;
-		}
-		else if (IS_PRINTABLE(ch))
-		{
-			str[i] = ch;
-			putch(ch);
-			i++;
-		}
-	}
-	str[i] = 0;
-	putch('\n');
-}
-
-
-
 void tab_complete(char *command, int *length) {
     struct tnode *node = tnode_startswith(root, command);
     struct tnode *min = tnode_searchmin(node);
@@ -49,8 +18,8 @@ void tab_complete(char *command, int *length) {
 }
 
 void shell() {
-	char str[BUF_LEN], ch;
-	int i;
+	char **argv, str[BUF_LEN], ch;
+	int i, argc;
 	root = NULL;
 	shell_func func;
 	
@@ -58,7 +27,7 @@ void shell() {
 	
 	while(1)
 	{
-		i=0;
+		i = 0;
 		putstr("> ");
 		
 		while (i < BUF_LEN-1)
@@ -98,13 +67,21 @@ void shell() {
 		}
 		else
 		{
-			func = get_cmd(str);
+			argc = i;
+			argv = parse_parameters(str, &argc);
+			func = get_cmd(argv[0]);
 			if (func == NULL)
 			{
 				putstr("Invalid Command: ");
-				putstr(str);
+				putstr(argv[0]);
 				putch('\n');
 			}
+			else
+			{
+				func(argc, argv);
+			}
+			
+			kfree(argv);
 		}
 	}
 	
@@ -118,6 +95,8 @@ void add_cmd(const char *cmd, shell_func func) {
 shell_func get_cmd(const char *cmd) {
 	shell_func theFunc;
 	struct tnode *cmd_node = tnode_search(root, cmd);
+	if (cmd_node == NULL)
+		return NULL;
 	theFunc = cmd_node->value;
 	return theFunc;
 }

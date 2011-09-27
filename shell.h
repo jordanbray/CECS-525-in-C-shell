@@ -4,8 +4,9 @@
 #include "screen.h"
 #include "string.h"
 #include "tree.h"
+#include "kmem.h"
 
-#define BUF_LEN (10)
+#define BUF_LEN (64)
 
 typedef int (*shell_func)(int, const char**);
 
