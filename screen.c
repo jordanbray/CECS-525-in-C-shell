@@ -39,11 +39,10 @@ char std_getch() {
  * */
 
 void putshort(short input) {
-	char buff[5];
+	char buf[5];
 	int i = 0;
-	int isNeg = (input < 0);
 	
-	if (isNeg)
+	if (input < 0)
 	{
 		putch('-');
 		input *= -1;
@@ -51,15 +50,15 @@ void putshort(short input) {
 	
 	do
 	{
-		buff[i] = (input % 10) + 48;
+		buf[i] = (input % 10) + 48;
 		input /= 10;
 		i++;
 	}
 	while (input > 0);
 	
-	for (; i >=0; i--)
+	for (; i >= 0; i--)
 	{
-		putch(buff[i]);
+		putch(buf[i]);
 	}
 }
 
@@ -97,6 +96,19 @@ void putch(char ch) {
     } else if (IS_PRINTABLE(ch) || ch == '\t') {
         std_putch(ch);
     }
+}
+
+int getint() {
+	char buf[110];
+	int length;
+	
+	getstr(buf, 110);
+	
+	length = strlen(buf);
+	//TODO: Until strlen gets fixed can't finish this function.
+	puthexint(length);
+	
+	return 0;
 }
 
 void getstr(char *str, int buffer) {

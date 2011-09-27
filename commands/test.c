@@ -45,11 +45,18 @@ void test_tree() {
 
 void test_strings()
 {
+	int test;
+	
+	putshort(0);
+	putch('\n');
 	putshort(100);
 	putch('\n');
 	putshort(12345);
 	putch('\n');
 	putshort(-500);
+	//putstr("\nType a valid int\n");
+	//test = getint();
+	//putshort(test);
 	putch('\n');
 }
 

@@ -19,6 +19,7 @@ void putint(double);
 void putstr(const char *);
 void putch(char);
 
+int getint();
 void getstr(char *, int);
 void getpass(char *, int);
 char getch();
