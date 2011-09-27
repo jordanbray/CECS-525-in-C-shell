@@ -7,7 +7,7 @@
 
 #define BUF_LEN (10)
 
-typedef void (*shell_func)(int, const char**);
+typedef int (*shell_func)(int, const char**);
 
 void shell();
 void add_cmd(const char *cmd, shell_func func);
