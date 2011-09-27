@@ -6,6 +6,6 @@
 #include<tree.h>
 #include<string.h>
 
-int test(int argc, const char** argv);
+int test(int, const char **);
 
 #endif

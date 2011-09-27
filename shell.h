@@ -10,11 +10,11 @@
 
 typedef int (*shell_func)(int, const char**);
 
-void shell(char* curUser);
-void add_cmd(const char *cmd, shell_func func);
-shell_func get_cmd(const char *cmd);
-void tab_complete(char *cmd, int *length);
-char **list_commands(char *cmd);
-char **parse_parameters(char *params, int *length);
+void shell(char *);
+void add_cmd(const char *, shell_func);
+shell_func get_cmd(const char *);
+void tab_complete(char *, int *);
+char **list_commands(char *);
+char **parse_parameters(char *, int *);
 
 #endif

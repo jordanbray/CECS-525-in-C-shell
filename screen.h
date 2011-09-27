@@ -14,12 +14,13 @@
 
 void initialize_acia();
 
-void puthexint(int i);
-void putstr(const char *str);
-void putch(char ch);
+void puthexint(int);
+void putint(double);
+void putstr(const char *);
+void putch(char);
 
-void getstr(char *str, int buffer);
-void getpass(char *str, int buffer);
+void getstr(char *, int);
+void getpass(char *, int);
 char getch();
 
 #endif
