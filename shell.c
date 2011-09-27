@@ -26,7 +26,7 @@ void tab_complete(char *command, int *length) {
     kfree(all);
 }
 
-void shell() {
+void shell(char* curUser) {
 	char **argv, str[BUF_LEN], ch;
 	int i, j, argc;
 	root = NULL;
@@ -36,6 +36,7 @@ void shell() {
 	while(1)
 	{
 		i = 0;
+		putstr(curUser);
 		putstr("> ");
 		
 		while (i < BUF_LEN-1)

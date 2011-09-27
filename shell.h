@@ -10,7 +10,7 @@
 
 typedef int (*shell_func)(int, const char**);
 
-void shell();
+void shell(char* curUser);
 void add_cmd(const char *cmd, shell_func func);
 shell_func get_cmd(const char *cmd);
 void tab_complete(char *cmd, int *length);
