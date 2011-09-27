@@ -11,5 +11,6 @@ int echoMode(int argc, const char** argv) {
 	int i;
 	for (i=1;i<argc;i++) {
 		putstr(argv[i]);
+		putch(' ');
 	}
 }
