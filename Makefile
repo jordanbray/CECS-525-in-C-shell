@@ -9,9 +9,14 @@ CFLAGS=-nostdlib -nostartfiles -nodefaultlibs
 CFLAGS+=-m68000
 CFLAGS+=-Os
 CFLAGS+=-I.
+CMD_SRCS=$(wildcard commands/*.c)
+CMD_OBJS=$(patsubst commands/%.c,commands/%.o,$(CMD_SRCS))
 
-main: main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o linker.x
-	${LD} main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o -o main -T linker.x -Map main.map
+commands/%.o: commands/%.c
+	${CC} ${CFLAGS} -o $@ -c $^
+
+main: main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o linker.x $(CMD_OBJS)
+	${LD} main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o $(CMD_OBJS) -o main -T linker.x -Map main.map
 	cp main attach_gdb_to_this
 	${OBJCOPY} -O srec main
 
@@ -49,4 +54,4 @@ debug: main
 	${QEMU} -M cecs -nographic -kernel main -S -gdb tcp::1234
 
 clean:
-	rm screen.o iv.o attach_gdb_to_this main main.o kmem.o main.map string.o tree.o shell.o
+	rm screen.o iv.o attach_gdb_to_this main main.o kmem.o main.map string.o tree.o shell.o commands/*.o
