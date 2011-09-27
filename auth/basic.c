@@ -18,7 +18,7 @@ int addUser(char* username, char* password) {
 	struct shellUser *newUser = kmalloc(sizeof(struct shellUser));
 
 	//Encrypt the user's password for storage
-	char *encpass = password
+	char *encpass = password;
 	encpass = memfrob(encpass, strlen(encpass));
 
 	//Add info to struct
