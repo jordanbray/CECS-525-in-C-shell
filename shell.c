@@ -121,3 +121,22 @@ shell_func get_cmd(const char *cmd) {
 	theFunc = cmd_node->value;
 	return theFunc;
 }
+
+char **parse_parameters(char *params, int *length) {
+    int space_count = 0;
+    int i;
+    for (i = 0; i < *length; i++)
+        if (params[i] == ' ')
+            space_count++;
+    char **ret = kmalloc(space_count+1);
+    int index = 0;
+    for (i = 0; i < *length; i++) {
+        if (params[i] == ' ') {
+            params[i] = '\0';
+            ret[index++] = &params[i];
+        }
+    }
+    *length = space_count+1;
+    return ret;
+}
+

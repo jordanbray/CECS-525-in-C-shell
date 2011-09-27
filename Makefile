@@ -8,6 +8,7 @@ QEMU=/opt/m68k/bin/qemu-system-m68k
 CFLAGS=-nostdlib -nostartfiles -nodefaultlibs
 CFLAGS+=-m68000
 CFLAGS+=-Os
+CFLAGS+=-I.
 
 main: main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o linker.x
 	${LD} main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o -o main -T linker.x -Map main.map
