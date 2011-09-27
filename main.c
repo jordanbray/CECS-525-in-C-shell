@@ -77,7 +77,8 @@ void main() {
 	addUser("user", "password2");
 
 	//Welcome message
-	putstr("Welcome to the CECS525 (unstable) C kernel!\n\n");
+	putstr("Welcome to the CECS525 (unstable) C kernel!\n");
+	putstr("Created by: Jordan Bray, Phillip 'Op' Flarsheim and Jimmy Murphy\n\n");
 
 	while (1) {
 		//Login message
