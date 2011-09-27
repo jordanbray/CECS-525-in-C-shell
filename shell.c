@@ -114,7 +114,7 @@ char **parse_parameters(char *params, int *length) {
     for (i = 0; i < *length; i++) {
         if (params[i] == ' ') {
             params[i] = '\0';
-            ret[index++] = &params[i];
+            ret[index++] = &params[i+1];
         }
     }
     *length = space_count+1;

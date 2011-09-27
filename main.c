@@ -48,7 +48,6 @@ void test_tree() {
 
 void main() {
 	initialize_acia();
-    initialize_commands();
 	kmeminit();
 	
 	shell();
