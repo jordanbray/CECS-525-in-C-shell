@@ -31,6 +31,12 @@ To Use:
 
 	- Launch program:
 		$ make run
+
+    - This will launch an instance of QEMU.  To exit the qemu session type:
+        $ 'Ctrl-A' then 'C' to bring up the qemu console
+            * keep in mind your OS is still running in the background
+        $ quit to exit
+
 	  Can still attach gdb if you make it in time with:
 		$ ./run_gdb
 
