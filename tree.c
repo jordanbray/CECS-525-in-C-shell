@@ -1,6 +1,6 @@
 #include "tree.h"
 /* insert a tnode into the binary tree */
-struct tnode *tnode_insert(struct tnode *p, char *key, void *value) {
+struct tnode *tnode_insert(struct tnode *p, const char *key, void *value) {
 	struct tnode *tmp_one = NULL;
 	struct tnode *tmp_two = NULL;
 
@@ -55,7 +55,7 @@ int tnode_count(struct tnode *p) {
 }
 
 /* locate a value in the btree */
-struct tnode *tnode_search(struct tnode *p, char *key) {
+struct tnode *tnode_search(struct tnode *p, const char *key) {
 	struct tnode *temp;
 	temp = p;
 
@@ -73,7 +73,7 @@ struct tnode *tnode_search(struct tnode *p, char *key) {
 	return NULL;
 }
 
-struct tnode *tnode_startswith(struct tnode *p, char *key) {
+struct tnode *tnode_startswith(struct tnode *p, const char *key) {
     struct tnode *temp;
     temp = p;
 
