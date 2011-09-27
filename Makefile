@@ -15,6 +15,11 @@ CRYPT_SRCS=$(wildcard crypto/*.c)
 CRYPT_OBJS=$(patsubst crypto/%.c,crypto/%.o,$(CRYPT_SRCS))
 AUTH_SRCS=$(wildcard auth/*.c)
 AUTH_OBJS=$(patsubst auth/%.c,auth/%.o,$(AUTH_SRCS))
+MATH_SRCS=$(wildcard math/*.c)
+MATH_OBJS=$(patsubst math/%.c,math/%.o,$(MATH_SRCS))
+
+math/%.o: math/%.c
+	${CC} ${CFLAGS} -o $@ -c $^
 
 crypto/%.o: crypto/%.c
 	${CC} ${CFLAGS} -o $@ -c $^
@@ -25,8 +30,8 @@ auth/%.o: auth/%.c
 commands/%.o: commands/%.c
 	${CC} ${CFLAGS} -o $@ -c $^
 
-main: main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o linker.x $(CRYPT_OBJS) $(AUTH_OBJS) $(CMD_OBJS)
-	${LD} main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o $(CRYPT_OBJS) $(AUTH_OBJS) $(CMD_OBJS) -o main -T linker.x -Map main.map
+main: main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o linker.x $(MATH_OBJS) $(CRYPT_OBJS) $(AUTH_OBJS) $(CMD_OBJS)
+	${LD} main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o $(MATH_OBJS) $(CRYPT_OBJS) $(AUTH_OBJS) $(CMD_OBJS) -o main -T linker.x -Map main.map
 	cp main attach_gdb_to_this
 	${OBJCOPY} -O srec main
 
@@ -64,4 +69,4 @@ debug: main
 	${QEMU} -M cecs -nographic -kernel main -S -gdb tcp::1234
 
 clean:
-	rm screen.o iv.o attach_gdb_to_this main main.o kmem.o main.map string.o tree.o shell.o commands/*.o crypto/*.o auth/*.o
+	rm screen.o iv.o attach_gdb_to_this main main.o kmem.o main.map string.o tree.o shell.o commands/*.o crypto/*.o auth/*.o math/*.o
