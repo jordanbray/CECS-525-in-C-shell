@@ -8,7 +8,8 @@
 #include<string.h>
 #include<kmem.h>
 
-#define AUTH_MAX_LOGINS (3)
+//Remember: this is 0 indexed
+#define AUTH_MAX_LOGINS (2)
 
 struct shellUser {
 	char *username;

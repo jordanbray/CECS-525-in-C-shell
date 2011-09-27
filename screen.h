@@ -19,6 +19,7 @@ void putstr(const char *str);
 void putch(char ch);
 
 void getstr(char *str, int buffer);
+void getpass(char *str, int buffer);
 char getch();
 
 #endif

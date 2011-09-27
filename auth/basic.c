@@ -67,13 +67,6 @@ int checkLogin(char *username, char *password) {
 	if (findUser == NULL)
 		return -1;
 
-	putstr("User's password: ");
-	putstr(theUser->password);
-	putstr("\n\n");
-	putstr("Checking password: ");
-	putstr(password);
-	putstr("\n\n");
-
 	if (theUser->invalidLogin > AUTH_MAX_LOGINS)
 		return 0;
 

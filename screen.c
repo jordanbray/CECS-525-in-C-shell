@@ -107,6 +107,33 @@ void getstr(char *str, int buffer) {
 	putch('\n');
 }
 
+void getpass(char *str, int buffer) {
+	int i=0;
+	char ch;
+
+	while (i < buffer-1) {
+		str[i] = 0;
+
+		ch = getch();
+		if (ch == '\r')
+			break;
+		else if (ch == '\b' || ch == 127) {
+			if (i>0) {
+				putch('\b');
+				i--;
+			}
+		}
+		else if (IS_PRINTABLE(ch)) {
+			str[i] = ch;
+			putch('*');
+			i++;
+		}
+	}
+
+	str[i] = 0;
+	putch('\n');
+}
+
 char getch() {
 	return std_getch();
 }

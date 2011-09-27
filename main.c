@@ -74,23 +74,27 @@ void main() {
 	initAuth();
 	//Add users
 	addUser("test", "password");
+	addUser("user", "password2");
 
 	//Welcome message
-	putstr("Welcome to the CECS525 (unstable) C kernel!\n\nPlease login...\n");
+	putstr("Welcome to the CECS525 (unstable) C kernel!\n\n");
 
-	//Check login
-	char *user = kmalloc((sizeof(char)*30)+1);
-	char *pass = kmalloc((sizeof(char)*30)+1);
-	do {
-		putstr("\nUsername: ");
-		getstr(user, 30);
-		putstr("Password: ");
-		getstr(pass, 30);
-	} while (checkLogin(user, pass) != 1);
-	
-	//Begin the shell
-	shell();
-	
-	//Basically lock the system up when you exit the shell
-	while(1);
+	while (1) {
+		//Login message
+		putstr("Please login...\n");
+
+		//Check login
+		char *user = kmalloc((sizeof(char)*30)+1);
+		char *pass = kmalloc((sizeof(char)*30)+1);
+		do {
+			putstr("\nUsername: ");
+			getstr(user, 30);
+			putstr("Password: ");
+			getpass(pass, 30);
+		} while (checkLogin(user, pass) != 1);
+
+		//Begin the shell
+		shell();
+	}
+		
 }
