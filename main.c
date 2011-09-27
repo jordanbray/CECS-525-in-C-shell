@@ -94,7 +94,7 @@ void main() {
 		} while (checkLogin(user, pass) != 1);
 
 		//Begin the shell
-		shell();
+		shell(user);
 	}
 		
 }
