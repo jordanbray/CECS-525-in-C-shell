@@ -4,9 +4,9 @@
 
 #include"memfrob.h"
 
-void *memfrob(void *mem, int length) {
+void *memfrob(unsigned char *mem, int length) {
 	int i;
-	void *enc_mem = kmalloc(length+1);
+	unsigned char *enc_mem = kmalloc(length);
 
 	for (i=0;i<length;i++) {
 		enc_mem[i] = mem[i] ^ 0x26;

@@ -7,6 +7,6 @@
 
 #include<kmem.h>
 
-void *memfrob(void *mem, int length);
+void *memfrob(unsigned char *mem, int length);
 
 #endif
