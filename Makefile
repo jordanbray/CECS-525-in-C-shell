@@ -14,14 +14,14 @@ CMD_OBJS=$(patsubst commands/%.c,commands/%.o,$(CMD_SRCS))
 CRYPT_SRCS=$(wildcard crypto/*.c)
 CRYPT_OBJS=$(patsubst crypto/%.c,crypto/%.o,$(CRYPT_SRCS))
 
-commands/%.o: commands/%.c
-	${CC} ${CFLAGS} -o $@ -c $^
-
 crypto/%.o: crypto/%.c
 	${CC} ${CFLAGS} -o $@ -c $^
 
-main: main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o linker.x $(CMD_OBJS) $(CRYPT_OBJS)
-	${LD} main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o $(CMD_OBJS) $(CRYPT_OBJS) -o main -T linker.x -Map main.map
+commands/%.o: commands/%.c
+	${CC} ${CFLAGS} -o $@ -c $^
+
+main: main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o linker.x $(CRYPT_OBJS) $(CMD_OBJS)
+	${LD} main.o iv.o screen.o exception.o kmem.o string.o tree.o shell.o $(CRYPT_OBJS) $(CMD_OBJS) -o main -T linker.x -Map main.map
 	cp main attach_gdb_to_this
 	${OBJCOPY} -O srec main
 
