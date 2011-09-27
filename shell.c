@@ -21,6 +21,7 @@ void shell() {
 	char **argv, str[BUF_LEN], ch;
 	int i, argc;
 	root = NULL;
+    initialize_commands();
 	shell_func func;
 	
 	putstr("Welcome to the (unstable) C Kernel\n");
