@@ -8,6 +8,7 @@
 
 void initialize_commands() {
 	add_cmd("echo", echo);
+	add_cmd("help", help);
 
 	//Add your commands here
 }
