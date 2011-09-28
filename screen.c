@@ -98,19 +98,6 @@ void putch(char ch) {
     }
 }
 
-int getint() {
-	char buf[110];
-	int length;
-	
-	getstr(buf, 110);
-	
-	length = strlen(buf);
-	//TODO: Until strlen gets fixed can't finish this function.
-	puthexint(length);
-	
-	return 0;
-}
-
 void getstr(char *str, int buffer) {
 	int i=0;
 	char ch;

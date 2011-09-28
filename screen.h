@@ -2,6 +2,7 @@
 #define __SCREEN_H__
 
 #include "string.h"
+#include "math/math.h"
 
 #define STATUS_IRQ      (1 << 7)
 #define STATUS_PE       (1 << 6)
@@ -15,11 +16,10 @@
 void initialize_acia();
 
 void puthexint(int);
-void putint(double);
+void putshort(short);
 void putstr(const char *);
 void putch(char);
 
-int getint();
 void getstr(char *, int);
 void getpass(char *, int);
 char getch();
