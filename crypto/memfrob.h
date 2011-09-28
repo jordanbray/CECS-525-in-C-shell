@@ -5,6 +5,6 @@
  * Trivial encryption based on GNU C's memfrob command
  */
 
-void *memfrob(void *mem, int length);
+void *memfrob(void *, int);
 
 #endif

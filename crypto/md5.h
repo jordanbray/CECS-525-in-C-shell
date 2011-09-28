@@ -12,6 +12,6 @@ typedef union uwb {
 
 typedef unsigned Digest[4];
 
-void *md5(const char *mem, int length);
+void *md5(const char *, int);
 
 #endif

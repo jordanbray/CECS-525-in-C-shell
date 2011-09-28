@@ -34,7 +34,7 @@ void main() {
 		putstr("Error adding user!\n");
 		while(1);
 	}
-	if (addUser("user", "password2") != 0) {
+	if (addUser("root", "root") != 0) {
 		putstr("Error adding user!\n");
 		while(1);
 	}

@@ -5,9 +5,9 @@
  * Basic user authentication
  */
 
-#include<string.h>
-#include<kmem.h>
-#include<crypto/crypto.h>
+#include <string.h>
+#include <kmem.h>
+#include <crypto/crypto.h>
 
 //Remember: this is 0 indexed
 #define AUTH_MAX_LOGINS (2)
@@ -24,9 +24,9 @@ struct userNode {
 };
 
 void *initAuth();
-int addUser(char* username, char* password);
-struct shellUser *findUser(char *username);
-int checkLogin(char *username, char *password);
-void *resetUser(char *username);
+int addUser(char *, char *);
+struct shellUser *findUser(char *);
+int checkLogin(char *, char *);
+void *resetUser(char *);
 
 #endif
