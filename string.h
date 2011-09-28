@@ -13,7 +13,9 @@ void *memmove(void *dest, const void *src, int n);
 int strcmp(const char *s1, const char *s2);
 int strstartswith(const char *str, const char *start);
 char *match_beginning(const char *s1, const char *s2);
+char *match_most_of(const char *s1, const char *s2);
 
+int chars_matched(const char *s1, const char *s2);
 #define IS_PRINTABLE(ch) ((ch) >= ' ' && (ch) <= '~')
 
 #endif

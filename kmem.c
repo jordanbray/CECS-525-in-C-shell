@@ -63,6 +63,20 @@ void *kmalloc(int size) {
 	return address;
 }
 
+void *free_and_realloc(void *ptr, int size) {
+	void *ret = kmalloc(size);
+	short copy_size = ((short *) ((((int)ptr)-2) * MEM_BLOCK_SIZE));
+	copy_size = copy_size > size ? size : copy_size;
+	memcpy(ret, ptr, copy_size);
+	kfree(ptr);
+	return ret;
+}
+
+void *krealloc(void *ptr, int size) {
+	return free_and_realloc(ptr, size);
+	/* TODO: make this better... */
+}
+
 void kmeminit() {
 	unsigned int needed_blocks = (MEM_BITSET_BYTES+MEM_BLOCK_SIZE-1)/MEM_BLOCK_SIZE;
 	unsigned int i;

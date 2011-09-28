@@ -68,9 +68,9 @@ void main() {
 
 	//Init kernel memory
 	kmeminit();
-	
 	//TODO: Implement a login of some kind
 	
+
 	//Begin the shell
 	shell();
 	

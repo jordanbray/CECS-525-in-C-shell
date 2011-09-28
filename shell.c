@@ -11,26 +11,40 @@
 
 struct tnode *root;
 
+struct linked_list *get_commands(char *command) {
+	struct linked_list *commands = NULL;
+	tnode_startswith(root, &commands, command);
+	return commands;
+}
+
+int add_next_character(char *command, struct linked_list *commands, int *length) {
+	while (commands->next) {
+		if (((char *)commands->value)[*length] != ((char *) commands->next->value)[*length])
+			return 0; // stop
+		commands = commands->next;
+	}
+	if (((char *)commands->value)[*length] == 0) {
+		command[*length] = ' ';
+		command[*length+1] = 0;
+		*length += 1;
+		return 0;
+	}
+	command[*length] = ((char *)commands->value)[*length];
+	command[*length+1] = 0;
+	*length += 1;
+	return 1; // continue
+}
+
 void tab_complete(char *command, int *length) {
-    struct tnode *node = tnode_startswith(root, command);
-    struct tnode *min = tnode_searchmin(node);
-    struct tnode *max = tnode_searchmax(node);
-    char *all = match_beginning(min->key, max->key);
-    int i;
-    int len = strlen(all);
-    for (i = *length; i < *length + len; i++) {
-        command[i] = all[i-*length];
-    }
-    command[i] = 0;
-    *length = *length + len;
-    kfree(all);
+	struct linked_list *commands = get_commands(command);
+	while (add_next_character(command, commands, length));
 }
 
 void shell() {
 	char **argv, str[BUF_LEN], ch;
 	int i, j, argc;
 	root = NULL;
-    initialize_commands();
+	initialize_commands();
 	shell_func func;
 	
 	putstr("Welcome to the (unstable) C Kernel\n");
@@ -119,21 +133,21 @@ shell_func get_cmd(const char *cmd) {
 }
 
 char **parse_parameters(char *params, int *length) {
-    int space_count = 0;
-    int i;
-    for (i = 0; i < *length; i++)
-        if (params[i] == ' ')
-            space_count++;
-    char **ret = kmalloc(space_count+1);
-    ret[0] = params;
-    int index = 1;
-    for (i = 0; i < *length; i++) {
-        if (params[i] == ' ') {
-            params[i] = '\0';
-            ret[index++] = &params[i+1];
-        }
-    }
-    *length = space_count+1;
-    return ret;
+	int space_count = 0;
+	int i;
+	for (i = 0; i < *length; i++)
+		if (params[i] == ' ')
+			space_count++;
+	char **ret = kmalloc(space_count+1);
+	ret[0] = params;
+	int index = 1;
+	for (i = 0; i < *length; i++) {
+		if (params[i] == ' ') {
+			params[i] = '\0';
+			ret[index++] = &params[i+1];
+		}
+	}
+	*length = space_count+1;
+	return ret;
 }
 

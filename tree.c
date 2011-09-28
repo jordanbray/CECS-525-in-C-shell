@@ -4,47 +4,116 @@
 
 #include "tree.h"
 
-/* insert a tnode into the binary tree */
-struct tnode *tnode_insert(struct tnode *p, const char *key, void *value) {
-	struct tnode *tmp_one = NULL;
-	struct tnode *tmp_two = NULL;
 
+
+struct tnode *tnode_rol(struct tnode *p) {
+	struct tnode *root = p->right;
+	if (root->left == NULL) {
+		root->left = p;
+	} else {
+		p->right = root->left;
+		root->left =  p;
+	}
+	
+	p->nodes = 1 + tnode_count(p->left) + tnode_count(p->right);
+	root->nodes = 1 + tnode_count(root->left) + tnode_count(root->right);
+	return root;
+}
+
+
+struct tnode *tnode_ror(struct tnode *p) {
+	struct tnode *root = p->left;
+	if (root->right == NULL) {
+		root->right = p;
+	} else {
+		p->left = root->right;
+		root->right = p;
+	}
+	p->nodes = 1 + tnode_count(p->left) + tnode_count(p->right);
+	root->nodes = 1 + tnode_count(root->left) + tnode_count(root->right);
+	return root;
+}
+
+void tnode_print(struct tnode *p, int num_spaces) {
+	int i;
+	if (p == NULL)
+		return;
+	for (i = 0; i < num_spaces; i++)
+		putch(' ');
+	putstr(p->key);
+	putstr(": ");
+	puthexint(p->nodes);
+	putch('\n');
+	tnode_print(p->left, num_spaces + 1);
+	tnode_print(p->right, num_spaces + 1);
+
+}
+
+/* floor of log base 2 of x */
+unsigned int_log2(unsigned x) {
+	int index = 31;
+	while (!(x & (1 << index)) && index) index--;
+	return index;
+}
+
+int abs(int x) {
+	if (x < 0)
+		return -x;
+	return x;
+}
+
+struct tnode *tnode_balance(struct tnode *p) {
+	if (p == NULL)
+		return NULL;
+	int left = int_log2(tnode_count(p->left));
+	int right = int_log2(tnode_count(p->right));
+	if (left - right > 1) { // more on the left side
+		left = int_log2(tnode_count(p->left->left));
+		right = int_log2(tnode_count(p->left->right));
+		if (left -  right > 1) {
+			p = tnode_ror(p);
+		} else if (right - left > 1) {
+			p->left = tnode_rol(p->left);
+			p = tnode_ror(p); 
+		}
+
+	} else if (right - left > 1) {
+		left = tnode_count(p->left);
+		right = tnode_count(p->right);
+		if (right - left > 1) {
+			p = tnode_rol(p);
+		} else if (left - right > 1) {
+			p->right = tnode_ror(p->right);
+			p = tnode_rol(p);
+		}
+	}
+	return p;
+}
+
+/* insert a tnode into the binary tree.  Overwrites previous contents. */
+struct tnode *tnode_insert(struct tnode *p, const char *key, void *value) {
 	if(p == NULL) {
 		/* insert [new] tnode as root node */
 		p = (struct tnode *)kmalloc(sizeof(struct tnode));
 		p->key = strdup(key);
 		p->value = value;
 		p->left = p->right = NULL;
-	} else {
-		tmp_one = p;
-		/* Traverse the tree to get a pointer to the specific tnode */
-		/* The child of this tnode will be the [new] tnode */
-		while(tmp_one != NULL) {
-			tmp_two = tmp_one;
-			if(strcmp(tmp_one->key, key) == 1)
-				tmp_one = tmp_one->left;
-			else
-			    tmp_one = tmp_one->right;
-		}
-
-		if(strcmp(tmp_two->key, key) == 1) {
-			/* insert [new] tnode as left child */
-			tmp_two->left = (struct tnode *)kmalloc(sizeof(struct tnode));
-			tmp_two = tmp_two->left;
-			tmp_two->key = strdup(key);
-			tmp_two->value = value;
-			tmp_two->left = tmp_two->right = NULL;
-		} else {
-			/* insert [new] tnode as left child */
-			tmp_two->right = (struct tnode *)kmalloc(sizeof(struct tnode)); 
-			tmp_two = tmp_two->right;
-			tmp_two->key = strdup(key);
-			tmp_two->value = value;
-			tmp_two->left = tmp_two->right = NULL;
-		}
+		p->nodes = 1;
+		return p;
 	}
-
-	return(p);
+	/* Traverse the tree to get a pointer to the specific tnode */
+	/* The child of this tnode will be the [new] tnode */
+	int compare = strcmp(p->key, key);
+	if (compare == 1)
+		p->left = tnode_insert(p->left, key, value);
+	else if (compare == -1)
+		p->right = tnode_insert(p->right, key, value);
+	else {
+		p->value = value; // overwrite...
+	}
+	p->nodes = tnode_count(p->left) + tnode_count(p->right) + 1;
+	p = tnode_balance(p);
+	return p;
 }
 
 /* returns the total number of tree nodes */
@@ -52,10 +121,7 @@ int tnode_count(struct tnode *p) {
 	if(p == NULL)
 		return 0;
 	else {
-		if(p->left == NULL && p->right == NULL)
-			return 1;
-		else
-			return(1 + (tnode_count(p->left) + tnode_count(p->right)));
+		return p->nodes;
 	}
 }
 
@@ -63,7 +129,6 @@ int tnode_count(struct tnode *p) {
 struct tnode *tnode_search(struct tnode *p, const char *key) {
 	struct tnode *temp;
 	temp = p;
-
 	while(temp != NULL) {
 		int compare = strcmp(temp->key, key);
 
@@ -78,20 +143,19 @@ struct tnode *tnode_search(struct tnode *p, const char *key) {
 	return NULL;
 }
 
-struct tnode *tnode_startswith(struct tnode *p, const char *key) {
-    struct tnode *temp;
-    temp = p;
-
-    while (temp != NULL) {
-        int compare = strstartswith(temp->key, key);
-        if (!compare)
-            return temp;
-        else if (compare == 1)
-            temp = temp->left;
-        else
-            temp = temp->right;
-    }
-    return NULL;
+void tnode_startswith(struct tnode *p, struct linked_list **ll, const char *key) {
+    struct tnode *temp = p;
+	if (p == NULL)
+		return;
+    int compare = strstartswith(p->key, key);
+	if (!compare) {
+		tnode_startswith(p->left, ll, key);
+		linked_list_push(ll, p->key);
+		tnode_startswith(p->right, ll, key);
+	} else if (compare == 1)
+		tnode_startswith(p->left, ll, key);
+	else
+		tnode_startswith(p->right, ll, key);
 }
 
 /* locate a minimum value in the btree */
