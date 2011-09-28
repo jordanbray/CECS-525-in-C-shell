@@ -4,6 +4,7 @@
 #include "kmem.h"
 #include "string.h"
 #include "linked_list.h"
+#include "math/math.h"
 
 struct tnode {
  char *key;
@@ -26,8 +27,8 @@ void tnode_startswith(struct tnode *p, struct linked_list **ll, const char *key)
 void tnode_print(struct tnode *p, int num_spaces);
 
 /* destroy, count tree nodes */
-void tnode_destroy(struct tnode *p);
-int tnode_count(struct tnode *p);
+void tnode_destroy(struct tnode *);
+int tnode_count(struct tnode *);
 
 #endif
 

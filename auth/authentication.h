@@ -5,6 +5,7 @@
  * Authentication library
  */
 
-#include"basic.h"
+#include "basic.h"
+#include "users.h"
 
 #endif

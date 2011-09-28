@@ -12,9 +12,9 @@
 #define MEM_BITSET_BITS (MEM_SIZE/MEM_BLOCK_SIZE)
 #define MEM_BITSET_BYTES (MEM_BITSET_BITS/8)
 
-void kfree(void *ptr);
-void *kmalloc(int size);
-void *krealloc(void *ptr, int size);
+void kfree(void *);
+void *kmalloc(int);
+void *krealloc(void *, int);
 void kmeminit();
 void printblocks();
 

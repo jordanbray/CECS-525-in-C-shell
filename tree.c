@@ -56,12 +56,6 @@ unsigned int_log2(unsigned x) {
 	return index;
 }
 
-int abs(int x) {
-	if (x < 0)
-		return -x;
-	return x;
-}
-
 struct tnode *tnode_balance(struct tnode *p) {
 	if (p == NULL)
 		return NULL;

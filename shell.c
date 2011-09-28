@@ -40,18 +40,17 @@ void tab_complete(char *command, int *length) {
 	while (add_next_character(command, commands, length));
 }
 
-void shell() {
+void shell(char* curUser) {
 	char **argv, str[BUF_LEN], ch;
 	int i, j, argc;
 	root = NULL;
 	initialize_commands();
 	shell_func func;
 	
-	putstr("Welcome to the (unstable) C Kernel\n");
-	
 	while(1)
 	{
 		i = 0;
+		putstr(curUser);
 		putstr("> ");
 		
 		while (i < BUF_LEN-1)

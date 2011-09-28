@@ -3,9 +3,9 @@
 /*
  * Help header file
  */
-#include<string.h>
-#include<screen.h>
-#include<shell.h>
+#include <string.h>
+#include <screen.h>
+#include <shell.h>
 
 
 int help(int, const char **);

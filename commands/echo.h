@@ -3,9 +3,9 @@
 /*
  * Echo mode header file
  */
-#include<string.h>
-#include<screen.h>
-#include<shell.h>
+#include <string.h>
+#include <screen.h>
+#include <shell.h>
 
 
 int echo(int, const char **);

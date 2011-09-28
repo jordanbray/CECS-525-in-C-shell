@@ -38,6 +38,30 @@ char std_getch() {
  * Utility Functions
  * */
 
+void putshort(short input) {
+	char buf[5];
+	int i = 0;
+	
+	if (input < 0)
+	{
+		putch('-');
+		input *= -1;
+	}
+	
+	do
+	{
+		buf[i] = (input % 10) + 48;
+		input /= 10;
+		i++;
+	}
+	while (input > 0);
+	
+	for (; i >= 0; i--)
+	{
+		putch(buf[i]);
+	}
+}
+
 void puthexint(int input) {
 	char hex[] = "00000000";
 	int i;
@@ -103,6 +127,33 @@ void getstr(char *str, int buffer) {
 		}
 	}
 	
+	str[i] = 0;
+	putch('\n');
+}
+
+void getpass(char *str, int buffer) {
+	int i=0;
+	char ch;
+
+	while (i < buffer-1) {
+		str[i] = 0;
+
+		ch = getch();
+		if (ch == '\r')
+			break;
+		else if (ch == '\b' || ch == 127) {
+			if (i>0) {
+				putch('\b');
+				i--;
+			}
+		}
+		else if (IS_PRINTABLE(ch)) {
+			str[i] = ch;
+			putch('*');
+			i++;
+		}
+	}
+
 	str[i] = 0;
 	putch('\n');
 }

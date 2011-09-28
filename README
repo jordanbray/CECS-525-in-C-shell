@@ -1,6 +1,8 @@
 Features:
 	Correctly sets up Initialization Vectors!
 	Prints stuff to the screen!
+	User authentication!
+	Basic cryptography!
 	Initializes hardware with inline assembly!
 	Connects with GDB!
 	Has Makefile!
