@@ -30,14 +30,7 @@ void main() {
 	//Login
 	initAuth();
 	//Add users
-	if (addUser("test", "password") != 0) {
-		putstr("Error adding user!\n");
-		while(1);
-	}
-	if (addUser("root", "root") != 0) {
-		putstr("Error adding user!\n");
-		while(1);
-	}
+	add_users();
 
 	//Welcome message
 	putstr("Welcome to the CECS525 (unstable) C kernel!\n");
