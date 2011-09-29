@@ -10,7 +10,7 @@ void *initAuth() {
 	rootUser = NULL;
 }
 
-int addUser(char* username, char* password) {
+int addUser(const char* username, const char* password) {
 	if (username == NULL || password == NULL)
 		return -1;
 
@@ -23,7 +23,7 @@ int addUser(char* username, char* password) {
 	encpass = memfrob(encpass, strlen(encpass));
 
 	//Add info to struct
-	newUser->username = username;
+	newUser->username = strdup(username);
 	newUser->password = encpass;
 
 	//Set invalid login to 0
@@ -56,7 +56,7 @@ int addUser(char* username, char* password) {
 	return 0;
 }
 
-struct shellUser *findUser(char* username) {
+struct shellUser *findUser(const char* username) {
 	if (rootUser == NULL)
 		return NULL;
 
@@ -69,28 +69,30 @@ struct shellUser *findUser(char* username) {
 	} while(curUser != NULL);
 }
 
-int checkLogin(char *username, char *password) {
+int checkLogin(const char *username, const char *passwd) {
 	struct shellUser *theUser = findUser(username);
 	if (findUser == NULL)
 		return -1;
 
-	//Encrypt user inputted password to check against stored pass
-	password = memfrob(password, strlen(password));
-
 	if (theUser->invalidLogin > AUTH_MAX_LOGINS)
 		return 0;
 
+	//Encrypt user inputted password to check against stored pass
+	char *password = memfrob(strdup(passwd), strlen(passwd));
+
 	if (strcmp(theUser->password, password) == 0) {
 		resetUser(username);
+		kfree(password);
 		return 1;
 	}
 	else {
 		theUser->invalidLogin++;
+		kfree(password);
 		return 0;
 	}
 }
 
-void *resetUser(char *username) {
+void *resetUser(const char *username) {
 	struct shellUser *theUser = findUser(username);
 
 	if (theUser == NULL)

@@ -41,9 +41,9 @@ void tnode_print(struct tnode *p, int num_spaces) {
 	for (i = 0; i < num_spaces; i++)
 		putch(' ');
 	putstr(p->key);
-	putstr(": ");
-	puthexint(p->nodes);
-	putch('\n');
+	putstr(" (");
+	putshort(p->nodes);
+	putstr(" nodes)\n");
 	tnode_print(p->left, num_spaces + 1);
 	tnode_print(p->right, num_spaces + 1);
 

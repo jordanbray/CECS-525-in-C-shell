@@ -61,7 +61,7 @@ void *kmalloc(int size) {
 
 void *free_and_realloc(void *ptr, int size) {
 	void *ret = kmalloc(size);
-	short copy_size = ((short *) ((((int)ptr)-2) * MEM_BLOCK_SIZE));
+	short copy_size = ((short) ((((int)ptr)-2) * MEM_BLOCK_SIZE));
 	copy_size = copy_size > size ? size : copy_size;
 	memcpy(ret, ptr, copy_size);
 	kfree(ptr);

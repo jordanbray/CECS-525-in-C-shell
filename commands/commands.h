@@ -5,3 +5,5 @@
 #include "echo.h"
 #include "help.h"
 #include "test.h"
+#include "memstatus.h"
+

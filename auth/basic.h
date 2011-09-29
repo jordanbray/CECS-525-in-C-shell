@@ -24,9 +24,9 @@ struct userNode {
 };
 
 void *initAuth();
-int addUser(char *, char *);
-struct shellUser *findUser(char *);
-int checkLogin(char *, char *);
-void *resetUser(char *);
+int addUser(const char *, const char *);
+struct shellUser *findUser(const char *);
+int checkLogin(const char *, const char *);
+void *resetUser(const char *);
 
 #endif
