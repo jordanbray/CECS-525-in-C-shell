@@ -48,7 +48,7 @@ void *kmalloc(int size) {
 	// all blocks checked, and smallest available block that fits size in it
 	// has been chosen
 	if (best_length == 0x7fffffff) {
-		putstr("No memory left!\n");
+		//putstr("No memory left!\n");
 		return NULL; // no blocks available
 	}
 	address = ((void *) (MEM_START + best_index*MEM_BLOCK_SIZE));

@@ -9,7 +9,7 @@ void *memfrob(void *mem, int length) {
 	unsigned char *memory = (unsigned char*)mem;
 
 	for (i=0;i<length;i++) {
-		memory[i] ^= 41;
+		memory[i] ^= 0xee;
 	}
 
 	return memory;

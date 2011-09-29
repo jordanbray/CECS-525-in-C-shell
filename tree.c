@@ -10,6 +10,7 @@ struct tnode *tnode_rol(struct tnode *p) {
 	struct tnode *root = p->right;
 	if (root->left == NULL) {
 		root->left = p;
+		p->right = NULL;
 	} else {
 		p->right = root->left;
 		root->left =  p;
@@ -25,6 +26,7 @@ struct tnode *tnode_ror(struct tnode *p) {
 	struct tnode *root = p->left;
 	if (root->right == NULL) {
 		root->right = p;
+		p->left = NULL;
 	} else {
 		p->left = root->right;
 		root->right = p;
@@ -51,8 +53,10 @@ void tnode_print(struct tnode *p, int num_spaces) {
 
 /* floor of log base 2 of x */
 unsigned int_log2(unsigned x) {
-	int index = 31;
+	int index = 30;
 	while (!(x & (1 << index)) && index) index--;
+	if (x != 0)
+		index++;
 	return index;
 }
 
@@ -64,19 +68,19 @@ struct tnode *tnode_balance(struct tnode *p) {
 	if (left - right > 1) { // more on the left side
 		left = int_log2(tnode_count(p->left->left));
 		right = int_log2(tnode_count(p->left->right));
-		if (left -  right > 1) {
+		if (left -  right > 0) {
 			p = tnode_ror(p);
-		} else if (right - left > 1) {
+		} else if (right - left > 0) {
 			p->left = tnode_rol(p->left);
-			p = tnode_ror(p); 
+			p = tnode_ror(p);
 		}
 
 	} else if (right - left > 1) {
 		left = tnode_count(p->left);
 		right = tnode_count(p->right);
-		if (right - left > 1) {
+		if (right - left > 0) {
 			p = tnode_rol(p);
-		} else if (left - right > 1) {
+		} else if (left - right > 0) {
 			p->right = tnode_ror(p->right);
 			p = tnode_rol(p);
 		}

@@ -11,6 +11,10 @@
 
 struct tnode *root;
 
+void print_command_tree() {
+	tnode_print(root, 0);
+}
+
 struct linked_list *get_commands(char *command) {
 	struct linked_list *commands = NULL;
 	tnode_startswith(root, &commands, command);
@@ -57,11 +61,14 @@ void tab_complete(char *command, int *length) {
 	}
 }
 
+void initialize_shell() {
+	root = NULL;
+	initialize_commands();
+}
+
 void shell(char* curUser) {
 	char **argv, str[BUF_LEN], ch;
 	int i, j, argc;
-	root = NULL;
-	initialize_commands();
 	shell_func func;
 	
 	while(1)
