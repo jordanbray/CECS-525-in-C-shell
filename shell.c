@@ -23,13 +23,15 @@ struct linked_list *get_commands(char *command) {
 
 void putoptions(struct linked_list *options)
 {
+	if (options == NULL)
+	{
+		return;
+	}
+	
 	putstr("\n\t");
 	putstr((char*)options->value);
 	
-	if (options->next != NULL)
-	{
-		putoptions(options->next);
-	}
+	putoptions(options->next);
 	kfree(options);
 }
 
