@@ -55,7 +55,7 @@ void tab_complete(char *command, int *length) {
 	struct linked_list *commands = get_commands(command);
 	if (commands == NULL) return;
 	while (add_next_character(command, commands, length));
-	while (commands->next) {
+	while (commands) {
 		kfree(commands); // yes, I know this is ugly
 		commands = commands->next; // but I'm doing it anyways
 	}
