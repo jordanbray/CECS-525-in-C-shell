@@ -70,10 +70,18 @@ int test(int argc, const char** argv)
 			putstr("****Testing Binary Tree****\n");
 			test_tree();
 		}
-		if (strcmp("str", argv[i]) == 0)
+		else if (strcmp("str", argv[i]) == 0)
 		{
 			putstr("****Testing String Conversion****\n");
 			test_strings();
+		}
+		else if(strcmp("err", argv[i]) == 0)
+		{
+			asm("trap #0");
+		}
+		else
+		{
+			putstr("Invalid Test\n");
 		}
 	}
 }

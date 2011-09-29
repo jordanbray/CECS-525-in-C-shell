@@ -30,7 +30,7 @@ There are several commands available in the provided Makefile.\\
 
 \noindent{\Large 3. Using QEMU}
 
-QEMU is an architecture emulation program, which has be specially modified to emulate the m68k. QEMU has been configured to run in either stand alone or debug modes (see section 2). Once QEMU is running it behaves like a tty terminal over serial to the emulated hardware. Keystrokes entered are sent directly to the kernel's shell. QEMU has a command mode which can be entered by pressing 'ctrl+a' followed quickly b 'c'. Some useful commands are provided below.\\
+QEMU is an architecture emulation program, which has be specially modified to emulate the m68k. QEMU has been configured to run in either stand alone or debug modes (see section 2). Once QEMU is running it behaves like a tty terminal over serial to the emulated hardware. Keystrokes entered are sent directly to the kernel's shell. QEMU has a command mode which can be entered by pressing 'ctrl+a' followed quickly by 'c'. Some useful commands are provided below.\\
 
 \begin{tabulary}{\textwidth}{r L}
 \bf{quit} & Exits the QEMU session.\\
@@ -39,15 +39,15 @@ QEMU is an architecture emulation program, which has be specially modified to em
 
 \noindent{\Large 4. Using GDB}
 
-GDB is a command line utility which attaches to the running QEMU session to proved debugging capability.In order to debug the m68k educational kernel first run the 'make debug' command(see section 2). The kernel is now compiled and waiting for a GDB session. To attach a GDB session open a new terminal and use the provided script 'run\_gdb'. A GDB session is now attached to the kernel and waiting for commands. Some useful commands are provided below.\\
+GDB is a command line utility which attaches to the running QEMU session to provide debugging capability. In order to debug the m68k educational kernel first run the 'make debug' command (see section 2). The kernel is now compiled and waiting for a GDB session. To attach a GDB session open a new terminal and use the provided script 'run\_gdb'. A GDB session is now attached to the kernel and waiting for commands. Some useful commands are provided below.\\
 
 \begin{tabulary}{\textwidth}{r L}
 \bf{c} & Continues the program until a breakpoint is hit.\\
 \bf{ctrl+c} & Interrupts the currently running program.\\
-\bf{b \textless funct\textgreater } & Adds a break point to the beginning of \textless func\textgreater .\\
-\bf{b *0x\textless address\textgreater} & Adds a break point at \textless address\textgreater .\\
+\bf{b $<$func$>$} & Adds a break point to the beginning of $<$func$>$.\\
+\bf{b *0x$<$address$>$} & Adds a break point at $<$address$>$.\\
 \bf{info b} & Lists the current breakpoints.\\
-\bf{delete \textless b\#\textgreater} & Deletes the breakpoint \textless b\#\textgreater .\\
+\bf{delete $<$b\#$>$} & Deletes the breakpoint $<$b\#$>$.\\
 \bf{si} & Runs one instruction and advances the program counter.\\
 \bf{disassem} & Disassembles the current procedure and prints it to the screen.\\
 \bf{info reg} & Displays the current contents of the registers.\\
@@ -57,9 +57,9 @@ GDB is a command line utility which attaches to the running QEMU session to prov
 \newpage
 \noindent{\Large 4. Using the basic shell}
 
-The m68k educational kernel comes equipped with a basic shell, which is accessible over serial tty. Upon startup the shell will prompt the user for a username. Once a username has been provided the user will be prompted for a password. By default the username and password are both 'root'. Username and password configurations are found within 'users.c' the 'auth' directory. To add a new user add a new entry to the '\emph{add\_users()}' function in the form of '\emph{register\_user("\textless username\textgreater", "\textless password\textgreater");}'.
+The m68k educational kernel comes equipped with a basic shell, which is accessible over serial tty. Upon startup the shell will prompt the user for a username. Once a username has been provided the user will be prompted for a password. By default the username and password are both 'root'. Username and password configurations are found within 'users.c' in the 'auth' directory. To add a new user add a new entry to the '\emph{add\_users()}' function in the form of '\emph{register\_user("$<$username$>$", "$<$password$>$");}'.
 
-Once a user has logged on they will be presented with a prompt in the form of '\emph{root\textgreater}'. The shell supports all printable ascii characters, backspace, and return; arrow keys are not supported. Additionally simple tab completion has been implemented for commands.\\
+Once a user has logged on they will be presented with a prompt in the form of '\emph{root$>$}'. The shell supports all printable ascii characters, backspace, and return; arrow keys are not supported. Additionally simple tab completion has been implemented for commands.\\
 
 \noindent{\Large 5. Available Libraries}
 
@@ -74,7 +74,7 @@ The m68k educational kernel does not contain a full implementation of libc. Seve
 
 \noindent{\Large 6. Writing programs}
 
-User programs must placed inside the 'commands' directory and contain a valid .c and .h file. Since there is no user-space programs must be linked to the shell at compile time; to do this the programs header file must be added to the 'commands.h' header file. Additionally a new entry must be added to the '\emph{initialize\_commands()}' function inside of commands.c in the form of '\emph{add\_cmd("\textless Command\textgreater",  \textless FunctionName\textgreater);}'. Functions linked this way must have the prototype of '\emph{\textless FunctionName\textgreater(int, const char**)}' The first parameter is the number of command arguments; the second is the arguments themselves.\\
+User programs must placed inside the 'commands' directory and contain a valid .c and .h file. Since there is no user-space programs must be linked to the shell at compile time; to do this the program's header file must be added to the 'commands.h' header file. Additionally a new entry must be added to the '\emph{initialize\_commands()}' function inside of commands.c in the form of '\emph{add\_cmd("$<$Command$>$",  $<$FunctionName$>$);}'. Functions linked this way must have the prototype of '\emph{$<$FunctionName$>$(int, const char**)}' The first parameter is the number of command arguments; the second is the arguments themselves.\\
 
 
 \end{document}
