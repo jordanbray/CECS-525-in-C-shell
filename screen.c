@@ -62,20 +62,36 @@ void putshort(short input) {
 	}
 }
 
-void puthexint(int input) {
-	char hex[] = "00000000";
+void puthex(const void *inptr, int length)
+{
+	unsigned char *ptr = (unsigned char*)inptr;
+	char buf;
 	int i;
-	for (i = 0; i < 8; i++) {
-		hex[7-i] = (char) (input & 0xf);
-		input >>= 4;
-		if (hex[7-i] <= 9)
-			hex[7-i] += '0';
-		else
-			hex[7-i] += 'a' - 10;
-	}
+	
 	putstr("0x");
-	for (i = 0; hex[i] == '0' && i < 7; i++);
-	for (;i < 8; i++)putch(hex[i]);
+	
+	for (i=0; i < length-1; i++)
+	{
+		buf = (char)((ptr[i] >> 4) & 0x0F);
+		if (buf > 9)
+		{
+			putch(buf - 10 + 97);
+		}
+		else
+		{
+			putch(buf + 48);
+		}
+		
+		buf = (char)(ptr[i] & 0x0F);
+		if (buf > 9)
+		{
+			putch(buf - 10 + 97);
+		}
+		else
+		{
+			putch(buf + 48);
+		}
+	}
 }
 
 void putstr(const char *str) {

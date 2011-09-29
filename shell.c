@@ -74,10 +74,18 @@ void shell(char* curUser) {
 			{
 				j = i;
 				tab_complete(str, &j);
-				for (; i < j; i++)
+				if (i == j)
 				{
-					putch(str[i]);
+					//Print out options
 				}
+				else
+				{
+					for (; i < j; i++)
+					{
+						putch(str[i]);
+					}
+				}
+				
 			}
 			else if (IS_PRINTABLE(ch))
 			{

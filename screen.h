@@ -15,7 +15,7 @@
 
 void initialize_acia();
 
-void puthexint(int);
+void puthex(const void *, int);
 void putshort(short);
 void putstr(const char *);
 void putch(char);

@@ -4,7 +4,7 @@
 void *test_malloc(int bytes) {
 	void *ptr = kmalloc(bytes);
 	putstr("Malloc'd and got: ");
-	puthexint((int)ptr);
+	puthex(&ptr, 4);
 	putch('\n');
 	return ptr;
 }
@@ -12,7 +12,7 @@ void *test_malloc(int bytes) {
 //Function to test our implementation of free
 void test_free(void *ptr) {
 	putstr("Freeing: ");
-	puthexint((int)ptr);
+	puthex(&ptr, 4);
 	putch('\n');
 	kfree(ptr);
 }

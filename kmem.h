@@ -11,6 +11,9 @@
 #define MEM_END (MEM_START + MEM_SIZE)
 #define MEM_BITSET_BITS (MEM_SIZE/MEM_BLOCK_SIZE)
 #define MEM_BITSET_BYTES (MEM_BITSET_BITS/8)
+#define GETBIT(index) ((blocks[(index)/8]) & (1 << ((index) % 8)))
+#define SETBIT(index) (blocks[(index)/8]=blocks[(index)/8]|(1 << ((index) % 8)))
+#define CLRBIT(index) (blocks[(index)/8]&=0xff^(1<<((index) % 8)))
 
 void kfree(void *);
 void *kmalloc(int);

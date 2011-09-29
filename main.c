@@ -32,7 +32,7 @@ void main() {
 	add_users();
 
 	//Welcome message
-	putstr("Welcome to the CECS525 (unstable) C kernel!\n");
+	putstr("Welcome to the CECS525 (unstable) Educational kernel!\n");
 	putstr("Created by: Jordan Bray, Phillip 'Op' Flarsheim and Jimmy Murphy\n\n");
 
 	while (1) {

@@ -2,10 +2,6 @@
 
 unsigned char *blocks;
 
-#define GETBIT(index) ((blocks[(index)/8]) & (1 << ((index) % 8)))
-#define SETBIT(index) (blocks[(index)/8]=blocks[(index)/8]|(1 << ((index) % 8)))
-#define CLRBIT(index) (blocks[(index)/8]&=0xff^(1<<((index) % 8)))
-
 void printblocks() {
     int i;
     for (i = 0; i < MEM_BITSET_BITS; i++)
