@@ -155,8 +155,6 @@ void shell(char* curUser) {
 			kfree(argv);
 		}
 	}
-	
-	tnode_destroy(root);
 }
 
 void add_cmd(const char *cmd, shell_func func) {
