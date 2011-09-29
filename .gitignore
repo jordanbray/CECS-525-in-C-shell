@@ -4,3 +4,4 @@ attach_gdb_to_this
 main
 main.map
 *.pdf
+.*.swp
