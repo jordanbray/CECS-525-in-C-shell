@@ -70,7 +70,7 @@ void puthex(const void *inptr, int length)
 	
 	putstr("0x");
 	
-	for (i=0; i < length-1; i++)
+	for (i=0; i < length; i++)
 	{
 		buf = (char)((ptr[i] >> 4) & 0x0F);
 		if (buf > 9)
