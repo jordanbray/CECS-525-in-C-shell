@@ -17,6 +17,18 @@ struct linked_list *get_commands(char *command) {
 	return commands;
 }
 
+void putoptions(struct linked_list *options)
+{
+	putstr("\n\t");
+	putstr((char*)options->value);
+	
+	if (options->next != NULL)
+	{
+		putoptions(options->next);
+	}
+	kfree(options);
+}
+
 int add_next_character(char *command, struct linked_list *commands, int *length) {
 	while (commands->next) {
 		if (((char *)commands->value)[*length] != ((char *) commands->next->value)[*length])
@@ -76,7 +88,11 @@ void shell(char* curUser) {
 				tab_complete(str, &j);
 				if (i == j)
 				{
-					//Print out options
+					putoptions(get_commands(str));
+					putch('\n');
+					putstr(curUser);
+					putstr("> ");
+					putstr(str);
 				}
 				else
 				{
