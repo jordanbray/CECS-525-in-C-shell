@@ -84,21 +84,24 @@ void shell(char* curUser) {
 			}
 			else if (ch == '\t')
 			{
-				j = i;
-				tab_complete(str, &j);
-				if (i == j)
+				if (strchr(str, ' ') == NULL)
 				{
-					putoptions(get_commands(str));
-					putch('\n');
-					putstr(curUser);
-					putstr("> ");
-					putstr(str);
-				}
-				else
-				{
-					for (; i < j; i++)
+					j = i;
+					tab_complete(str, &j);
+					if (i == j)
 					{
-						putch(str[i]);
+						putoptions(get_commands(str));
+						putch('\n');
+						putstr(curUser);
+						putstr("> ");
+						putstr(str);
+					}
+					else
+					{
+						for (; i < j; i++)
+						{
+							putch(str[i]);
+						}
 					}
 				}
 				
@@ -117,7 +120,7 @@ void shell(char* curUser) {
 		if (strcmp(str, "exit") == 0)
 		{
 			putstr("Exiting...\n");
-			return;
+			break;
 		}
 		else
 		{
