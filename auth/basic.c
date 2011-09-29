@@ -71,15 +71,11 @@ struct shellUser *findUser(const char* username) {
 
 int checkLogin(const char *username, const char *passwd) {
 	struct shellUser *theUser = findUser(username);
-	if (findUser == NULL) {
-		putstr("No user...\n");
+	if (findUser == NULL)
 		return -1;
-	}
 
-	if (theUser->invalidLogin > AUTH_MAX_LOGINS) {
-		putstr("Too many logins\n");
+	if (theUser->invalidLogin > AUTH_MAX_LOGINS)
 		return 0;
-	}
 
 	//Encrypt user inputted password to check against stored pass
 	int passlen = strlen(passwd);
@@ -87,13 +83,11 @@ int checkLogin(const char *username, const char *passwd) {
 	if (strcmp(theUser->password, password) == 0) {
 		resetUser(username);
 		kfree(password);
-		putstr("Success!\n");
 		return 1;
 	}
 	else {
 		theUser->invalidLogin++;
 		kfree(password);
-		putstr("Failed password\n");
 		return 0;
 	}
 }
