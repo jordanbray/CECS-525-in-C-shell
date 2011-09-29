@@ -66,6 +66,7 @@ struct shellUser *findUser(const char* username) {
 
 		curUser = curUser->nextUser;
 	} while(curUser != NULL);
+	return NULL;
 }
 
 int checkLogin(const char *username, const char *passwd) {
