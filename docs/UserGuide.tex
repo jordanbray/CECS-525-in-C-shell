@@ -79,5 +79,17 @@ The m68k educational kernel does not contain a full implementation of libc. Seve
 
 User programs must placed inside the 'commands' directory and contain a valid .c and .h file. Since there is no user-space programs must be linked to the shell at compile time; to do this the program's header file must be added to the 'commands.h' header file. Additionally a new entry must be added to the '\emph{initialize\_commands()}' function inside of commands.c in the form of '\emph{add\_cmd("$<$Command$>$",  $<$FunctionName$>$);}'. Functions linked this way must have the prototype of '\emph{$<$FunctionName$>$(int, const char**)}' The first parameter is the number of command arguments; the second is the arguments themselves.\\
 
+\noindent{\Large 7. Memory management}
+
+Because the M68K only has 4K of memory availble when you first start, memory management is extremely important. When using this kernel you must use the \emph{kmem} library, which has the functions \emph{kalloc} and \emph{kfree}. These functions work in a similar manner to malloc and free from the standard C library. You can check to see how much memory is being used from the shell with the command \emph{memstatus}. It is reccomended that you use memstatus before and after you test a command to make sure you are doing proper memory management, and do not have memory leaks.\\
+
+\noindent{\Large 8. Strings}
+
+Due to the fact that M68K boards used are for educational purposes, you can not assume that the memory will be all zeros before your program starts. Because of this, it is extremely important that you ensure all strings are terminated with a 0. If they are not, the string functions will not work properly, and could go off to execute other arbitrary code.\\
+
+\noindent{\Large 9. Users}
+
+The user authentication in this implementation is very basic. You can have multiple user accounts, but only 1 user can be logged in at a time. Users have 3 attempts to log into their account, and following the third invalid attempt the account is locked out. This can be reset by simply restarting the board. The user can change their password via the \emph{passwd} command provided.
+
 
 \end{document}
