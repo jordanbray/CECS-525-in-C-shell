@@ -73,4 +73,4 @@ debug: main
 	${QEMU} -M cecs -nographic -kernel main -S -gdb tcp::1234
 
 clean:
-	rm screen.o iv.o attach_gdb_to_this main main.o kmem.o main.map string.o tree.o shell.o linked_list.o commands/*.o crypto/*.o auth/*.o math/*.o
+	rm screen.o iv.o attach_gdb_to_this main main.o kmem.o main.map string.o tree.o shell.o linked_list.o exception.o commands/*.o crypto/*.o auth/*.o math/*.o

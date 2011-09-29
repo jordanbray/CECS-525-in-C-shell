@@ -23,7 +23,7 @@
 void main() {
 	//Must initialize the ACIA
 	initialize_acia();
-
+	
 	//Init kernel memory
 	kmeminit();
 	//Login
@@ -33,6 +33,7 @@ void main() {
 
 	//Welcome message
 	putstr("\nWelcome to the CECS-525 (unstable) Educational kernel!\nCreated by: Jordan Bray, Phillip 'Op' Flarsheim and Jimmy Murphy\n\n");
+	initialize_shell();
 
 	while (1) {
 		//Login message

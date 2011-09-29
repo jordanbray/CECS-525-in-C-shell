@@ -28,7 +28,7 @@ char *match_beginning(const char *s1, const char *s2) {
 	int s1len = strlen(s1);
 	int s2len = strlen(s2);
 	int len = s1len < s2len ? s1len : s2len;
-	char *ret = kmalloc(len);
+	char *ret = kmalloc(len+1);
 	int i;
 	for (i = 0; i < len && s1[i] == s2[i]; i++) {
 		ret[i] = s1[i];
@@ -175,7 +175,7 @@ char *strcpy(char *destination, const char *source) {
 	for (i=0;i<len;i++) {
 		destination[i] = source[i];
 	}
-	destination[len+1] = 0;
+	destination[len] = 0;
 	
 	return destination;
 }

@@ -74,7 +74,8 @@ int test(int argc, const char** argv)
 		{
 			putstr("****Testing String Conversion****\n");
 			test_strings();
-		}
+		} else if (!strcmp("commands", argv[i]))
+			print_command_tree();
 		else if(strcmp("err", argv[i]) == 0)
 		{
 			asm("trap #0");
