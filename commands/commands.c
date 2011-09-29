@@ -10,6 +10,6 @@ void initialize_commands() {
 	add_cmd("echo", echo);
 	add_cmd("help", help);
 	add_cmd("test", test);
-
+	add_cmd("memstatus", memstatus);
 	//Add your commands here
 }

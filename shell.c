@@ -108,7 +108,7 @@ void shell(char* curUser) {
 			}
 			else
 			{
-				func(argc, argv);
+				func(argc, (const char **)argv);
 			}
 			
 			kfree(argv);
