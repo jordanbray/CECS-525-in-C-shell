@@ -4,6 +4,7 @@
  */
 
 #include"help.h"
+#include"shell.h"
 
 int help(int argc, const char** argv) {
 	//Check if they are trying to find help for a particular command
@@ -14,7 +15,9 @@ int help(int argc, const char** argv) {
 	}
 
 	//Looking for all the commands
-	putstr("Available commands:\n");
+	putstr("Available commands:");
+	putoptions(get_commands(""));
+	putch('\n');
 
 	//TODO: Fix this!
 	//Do some looping of some kind
