@@ -50,6 +50,10 @@ int add_next_character(char *command, struct linked_list *commands, int *length)
 void tab_complete(char *command, int *length) {
 	struct linked_list *commands = get_commands(command);
 	while (add_next_character(command, commands, length));
+	while (commands->next) {
+		kfree(commands); // yes, I know this is ugly
+		commands = commands->next; // but I'm doing it anyways
+	}
 }
 
 void shell(char* curUser) {

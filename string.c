@@ -175,7 +175,7 @@ char *strcpy(char *destination, const char *source) {
 	for (i=0;i<len;i++) {
 		destination[i] = source[i];
 	}
-	destination[len+1] = 0;
+	destination[len] = 0;
 	
 	return destination;
 }
