@@ -12,5 +12,6 @@ void initialize_commands() {
 	add_cmd("test", test);
 	add_cmd("test2", test);
 	add_cmd("memstatus", memstatus);
+	add_cmd("passwd", passwd);
 	//Add your commands here
 }

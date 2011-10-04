@@ -19,10 +19,6 @@ int help(int argc, const char** argv) {
 	putoptions(get_commands(""));
 	putch('\n');
 
-	//TODO: Fix this!
-	//Do some looping of some kind
-	//Output each command
-
 	//Done
 	return 0;
 }

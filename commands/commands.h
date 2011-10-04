@@ -6,4 +6,5 @@
 #include "help.h"
 #include "test.h"
 #include "memstatus.h"
+#include "passwd.h"
 

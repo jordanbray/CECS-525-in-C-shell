@@ -16,5 +16,6 @@ shell_func get_cmd(const char *);
 void tab_complete(char *, int *);
 char **list_commands(char *);
 char **parse_parameters(char *, int *);
+char *getCurUser();
 
 #endif
