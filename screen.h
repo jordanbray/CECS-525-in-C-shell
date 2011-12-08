@@ -2,7 +2,6 @@
 #define __SCREEN_H__
 
 #include "string.h"
-#include "math/math.h"
 
 void initialize_acia();
 

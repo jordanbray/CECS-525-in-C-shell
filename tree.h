@@ -4,7 +4,6 @@
 #include "kmem.h"
 #include "string.h"
 #include "linked_list.h"
-#include "math/math.h"
 
 struct tnode {
  char *key;
