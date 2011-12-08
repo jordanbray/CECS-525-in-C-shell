@@ -4,6 +4,15 @@
 
 #include "screen.h"
 
+#define STATUS_IRQ      (1 << 7)
+#define STATUS_PE       (1 << 6)
+#define STATUS_OVRN     (1 << 5)
+#define STATUS_FE       (1 << 4)
+#define STATUS_CTS      (1 << 3)
+#define STATUS_DCD      (1 << 2)
+#define STATUS_TDRE     (1 << 1)
+#define STATUS_RDRF     (1 << 0)
+
 /**
  * ACIA serial controler
  * */
@@ -28,10 +37,8 @@ void std_putch(char ch) {
 }
 
 char std_getch() {
-	char ch;
 	while (!(acia->control & STATUS_RDRF)); //Wait for transmit register empty
 	return acia->data; //Read character
-	return ch;
 }
 
 /**

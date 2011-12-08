@@ -1,22 +1,36 @@
 \documentclass{article}
 \usepackage{fullpage}
 \usepackage{tabulary}
+
+% The following creates a new section style, using ssection and ssubsection
+\newcommand{\ssection}[1]{\section[#1]{\raggedright\normalfont\scshape #1}}
+\newcommand{\ssubsection}[1]{\subsection[#1]{\raggedright\normalfont\itshape #1}}
+
 \begin{document}
 \begin{center}
 {\huge The m68k Educational C Kernel}
 \end{center}
-\noindent{\Large 1. Setup Development Environment}
 
-This project makes use of several development tools
-%We need to write installation instructions and better descriptions
+\ssection{Starting Development Environment}
+This project makes use of several development tools, all of which are open source.  A virtual machine image has been provided which contains all the nessisary tools for development.  Below is a list of instructions to get the virtual machine up and rinning.
 \begin{itemize}
-\item The m68k-elf collection to compile and link the m68k educational kernel
-\item The m68k-elf-gdb to debug the kernel.
-\item The m68k QEMU environment to emulate the hardware.
+\item Download the VirtualBox VM image from: http:\//vkappa.speedacm.org/download/M68k\_Dev.ova
+\item Download and install VirtualBox from: https://www.virtualbox.org/wiki/Downloads
+\item Run VirtualBox, and go to File $\rightarrow$ 'Iport Appliance...'
+\item Click 'Choose...' and select the downloaded M68k\_Dev.ova file.
+\item Click 'Next'
+\item Change RAM to an amount appropriate for your computer (AKA how much you can spare).
+\item Click 'Import.'
+\item Once completed, select 'M68K Development' and click 'Start'.
+\item Once booted, type 'm68kdev' as the username and 'm68k' as the password.
+\item Start the graphical session (XFCE) by typing the command 'startx' then hitting enter.
 \end{itemize}
+
+To start a new project, it is recommended that you make a copy of our kernel and modify that.  To do this, go to the terminal and (from your home directory) type: cp -r CECS-525-in-C-shell/ your\_project\_name
 
 \noindent{\Large 2. Compiling the kernel}
 
+\ssection{Compiling the kernel}
 There are several commands available in the provided Makefile.\\
 
 \begin{tabulary}{\textwidth}{r L}
@@ -25,20 +39,16 @@ There are several commands available in the provided Makefile.\\
 \bf{make debug} & Compiles and links the kernel. The compiled kernel is then loaded into QEMU, where it waits for a GDB session to connect.\\
 \bf{make disassemble} & Compiles the kernel and prints the result to the screen.\\
 \bf{make clean} & Deletes all compiled output files.
-\end{tabulary}\\
-{\tiny.}\\
+\end{tabulary}
 
-\noindent{\Large 3. Using QEMU}
-
+\ssection{Using QEMU}
 QEMU is an architecture emulation program, which has be specially modified to emulate the m68k. QEMU has been configured to run in either stand alone or debug modes (see section 2). Once QEMU is running it behaves like a tty terminal over serial to the emulated hardware. Keystrokes entered are sent directly to the kernel's shell. QEMU has a command mode which can be entered by pressing 'ctrl+a' followed quickly by 'c'. Some useful commands are provided below.\\
 
 \begin{tabulary}{\textwidth}{r L}
 \bf{quit} & Exits the QEMU session.\\
-\end{tabulary}\\
-{\tiny.}\\
+\end{tabulary}
 
-\noindent{\Large 4. Using GDB}
-
+\ssection{Using GDB}
 GDB is a command line utility which attaches to the running QEMU session to provide debugging capability. In order to debug the m68k educational kernel first run the 'make debug' command (see section 2). The kernel is now compiled and waiting for a GDB session. To attach a GDB session open a new terminal and use the provided script 'run\_gdb'. A GDB session is now attached to the kernel and waiting for commands. Some useful commands are provided below.\\
 
 \begin{tabulary}{\textwidth}{r L}
@@ -52,17 +62,15 @@ GDB is a command line utility which attaches to the running QEMU session to prov
 \bf{disassem} & Disassembles the current procedure and prints it to the screen.\\
 \bf{info reg} & Displays the current contents of the registers.\\
 \bf{quit} & Exits the GDB session.
-\end{tabulary}\\
-{\tiny.}\\
-\newpage
-\noindent{\Large 4. Using the basic shell}
+\end{tabulary}
+
+\ssection{Using the basic shell}
 
 The m68k educational kernel comes equipped with a basic shell, which is accessible over serial tty. Upon startup the shell will prompt the user for a username. Once a username has been provided the user will be prompted for a password. By default the username and password are both 'root'. Username and password configurations are found within 'users.c' in the 'auth' directory. To add a new user add a new entry to the '\emph{add\_users()}' function in the form of '\emph{register\_user("$<$username$>$", "$<$password$>$");}'.
 
 Once a user has logged on they will be presented with a prompt in the form of '\emph{root$>$}'. The shell supports all printable ascii characters, backspace, and return; arrow keys are not supported. Additionally simple tab completion has been implemented for commands.\\
 
-\noindent{\Large 5. Available Libraries}
-
+\ssection{Available Libraries}
 The m68k educational kernel does not contain a full implementation of libc. Several libraries have been implemented for use on the m68k.\\
 
 \begin{tabulary}{\textwidth}{r L}
@@ -72,24 +80,18 @@ The m68k educational kernel does not contain a full implementation of libc. Seve
 \bf{linked\_list.h} & A simple implementation of a linked list.\\
 \bf{tree.h} & A simple implementation of a balanced binary tree.\\
 \bf{auth.h} & A simple user authentication system.\\
-\end{tabulary}\\
-{\tiny.}\\
+\end{tabulary}
 
-\noindent{\Large 6. Writing programs}
-
+\ssection{Writing programs}
 User programs must placed inside the 'commands' directory and contain a valid .c and .h file. Since there is no user-space programs must be linked to the shell at compile time; to do this the program's header file must be added to the 'commands.h' header file. Additionally a new entry must be added to the '\emph{initialize\_commands()}' function inside of commands.c in the form of '\emph{add\_cmd("$<$Command$>$",  $<$FunctionName$>$);}'. Functions linked this way must have the prototype of '\emph{$<$FunctionName$>$(int, const char**)}' The first parameter is the number of command arguments; the second is the arguments themselves.\\
 
-\noindent{\Large 7. Memory management}
+\ssection{Memory management}
+Because the M68K only has 4K of memory availble when you first start, memory management is extremely important. When using this kernel you must use the \emph{kmem} library, which has the functions \emph{kalloc} and \emph{kfree}. These functions work in a similar manner to malloc and free from the standard C library. You can check to see how much memory is being used from the shell with the command \emph{memstatus}. It is reccomended that you use memstatus before and after you test a command to make sure you are doing proper memory management, and do not have memory leaks.
 
-Because the M68K only has 4K of memory availble when you first start, memory management is extremely important. When using this kernel you must use the \emph{kmem} library, which has the functions \emph{kalloc} and \emph{kfree}. These functions work in a similar manner to malloc and free from the standard C library. You can check to see how much memory is being used from the shell with the command \emph{memstatus}. It is reccomended that you use memstatus before and after you test a command to make sure you are doing proper memory management, and do not have memory leaks.\\
+\ssection{Strings}
+Due to the fact that M68K boards used are for educational purposes, you can not assume that the memory will be all zeros before your program starts. Because of this, it is extremely important that you ensure all strings are terminated with a 0. If they are not, the string functions will not work properly, and could go off to execute other arbitrary code.
 
-\noindent{\Large 8. Strings}
-
-Due to the fact that M68K boards used are for educational purposes, you can not assume that the memory will be all zeros before your program starts. Because of this, it is extremely important that you ensure all strings are terminated with a 0. If they are not, the string functions will not work properly, and could go off to execute other arbitrary code.\\
-
-\noindent{\Large 9. Users}
-
+\ssection{Users}
 The user authentication in this implementation is very basic. You can have multiple user accounts, but only 1 user can be logged in at a time. Users have 3 attempts to log into their account, and following the third invalid attempt the account is locked out. This can be reset by simply restarting the board. The user can change their password via the \emph{passwd} command provided.
-
 
 \end{document}

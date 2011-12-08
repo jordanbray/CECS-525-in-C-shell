@@ -80,6 +80,12 @@ int test(int argc, const char** argv)
 		{
 			asm("trap #0");
 		}
+		else if (strcmp("moremem", argv[i]) == 0)
+		{
+			char *ptr = 0x8000;
+			strcpy(ptr, "Hello, World!!!");
+			putstr(ptr);
+		}
 		else
 		{
 			putstr("Invalid Test\n");

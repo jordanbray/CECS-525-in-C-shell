@@ -31,8 +31,9 @@ void main() {
 	//Add users
 	add_users();
 
-	//Welcome message
-	putstr("\nWelcome to the CECS-525 (unstable) Educational kernel!\nCreated by: Jordan Bray, Phillip 'Op' Flarsheim and Jimmy Murphy\n\n");
+//Welcome message
+	putstr("\nWelcome to the CECS-525 (unstable) Educational kernel!\n\
+Created by: Jordan Bray, Phillip 'Op' Flarsheim and Jimmy Murphy\n\n");
 	initialize_shell();
 
 	while (1) {
