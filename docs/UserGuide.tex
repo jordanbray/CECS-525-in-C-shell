@@ -81,15 +81,15 @@ User programs must placed inside the 'commands' directory and contain a valid .c
 
 \noindent{\Large 7. Memory management}
 
-Because the M68K only has 4K of memory availble when starting out, memory management is extremely important. When using this kernel the user must use the \emph{kmem} library, which has the functions \emph{kalloc} and \emph{kfree}. These functions work in a similar manner to malloc and free from the standard C library. The user can check to see how much memory is being used from the shell with the command \emph{memstatus}. It is reccomended that users use memstatus before and after testing a command to make sure proper memory management is being done, and that the program does not have memory leaks.\\
+Because the M68K only has 4K of memory availble when you first start, memory management is extremely important. When using this kernel you must use the \emph{kmem} library, which has the functions \emph{kalloc} and \emph{kfree}. These functions work in a similar manner to malloc and free from the standard C library. You can check to see how much memory is being used from the shell with the command \emph{memstatus}. It is reccomended that you use memstatus before and after you test a command to make sure you are doing proper memory management, and do not have memory leaks.\\
 
 \noindent{\Large 8. Strings}
 
-Due to the fact that M68K boards used are for educational purposes, users can not assume that the memory will be all zeros before a given program starts. Because of this, it is extremely important that users ensure all strings are terminated with a 0. If they are not, the string functions will not work properly, and could go off to execute other arbitrary code.\\
+Due to the fact that M68K boards used are for educational purposes, you can not assume that the memory will be all zeros before your program starts. Because of this, it is extremely important that you ensure all strings are terminated with a 0. If they are not, the string functions will not work properly, and could go off to execute other arbitrary code.\\
 
 \noindent{\Large 9. Users}
 
-The user authentication in this implementation is very basic. The system can have multiple user accounts, but only 1 user can be logged in at a time. Users have 3 attempts to log into their account, and following the third invalid attempt the account is locked out. This can be reset by simply restarting the board. The user can change their password via the \emph{passwd} command provided.
+The user authentication in this implementation is very basic. You can have multiple user accounts, but only 1 user can be logged in at a time. Users have 3 attempts to log into their account, and following the third invalid attempt the account is locked out. This can be reset by simply restarting the board. The user can change their password via the \emph{passwd} command provided.
 
 
 \end{document}
