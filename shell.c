@@ -157,17 +157,29 @@ void shell(char* curUser) {
 	}
 }
 
-void add_cmd(const char *cmd, shell_func func) {
-	root = tnode_insert(root, cmd, func);
+void add_cmd(const char *cmd, shell_func func, shell_func help) {
+	shell_cmd *node = kmalloc(sizeof(shell_cmd));
+	node->run = func;
+	node->help = help;
+	root = tnode_insert(root, cmd, node);
 }
 
 shell_func get_cmd(const char *cmd) {
-	shell_func theFunc;
+	shell_cmd *node;
 	struct tnode *cmd_node = tnode_search(root, cmd);
 	if (cmd_node == NULL)
 		return NULL;
-	theFunc = cmd_node->value;
-	return theFunc;
+	node = cmd_node->value;
+	return node->run;
+}
+
+shell_func get_help(const char *cmd) {
+	shell_cmd *node;
+	struct tnode *cmd_node = tnode_search(root, cmd);
+	if (cmd_node == NULL)
+		return NULL;
+	node = cmd_node->value;
+	return node->help;
 }
 
 char **parse_parameters(char *params, int *length) {

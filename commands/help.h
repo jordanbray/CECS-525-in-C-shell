@@ -9,6 +9,7 @@
 
 
 int help(int, const char **);
+int help_help(int, const char **);
 
 #endif
 

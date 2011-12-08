@@ -9,6 +9,7 @@
 
 
 int echo(int, const char **);
+int echo_help(int, const char **);
 
 #endif
 
