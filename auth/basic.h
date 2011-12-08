@@ -28,6 +28,5 @@ int addUser(const char *, const char *);
 struct shellUser *findUser(const char *);
 int checkLogin(const char *, const char *);
 void *resetUser(const char *);
-int changePAssword(const char *, const char *);
 
 #endif

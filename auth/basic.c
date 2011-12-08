@@ -100,23 +100,3 @@ void *resetUser(const char *username) {
 
 	theUser->invalidLogin = 0;
 }
-
-int changePassword(const char *username, const char *passwd) {
-	struct shellUser *theUser = findUser(username);
-
-	if (theUser == NULL)
-		return -1;
-
-	//Clear out the old password
-	kfree(theUser->password);
-
-	//Create new encrypted password
-	char *encpass = strdup(passwd);
-	encpass = memfrob(encpass, strlen(passwd));
-
-	//Set the new password
-	theUser->password = encpass;
-
-	//Done
-	return 1;
-}

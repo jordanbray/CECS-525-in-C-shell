@@ -10,7 +10,6 @@
 #include "shell.h"
 
 struct tnode *root;
-char *curUser;
 
 void print_command_tree() {
 	tnode_print(root, 0);
@@ -69,12 +68,10 @@ void initialize_shell() {
 	initialize_commands();
 }
 
-void shell(char* user) {
+void shell(char* curUser) {
 	char **argv, str[BUF_LEN], ch;
 	int i, j, argc;
 	shell_func func;
-
-	curUser = user;
 	
 	while(1)
 	{
@@ -192,6 +189,3 @@ char **parse_parameters(char *params, int *length) {
 	return ret;
 }
 
-char *getCurUser() {
-	return curUser;
-}
