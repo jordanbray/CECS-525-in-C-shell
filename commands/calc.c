@@ -2,7 +2,7 @@
 
 short evaluate(short num1, char oper, short num2)
 {
-	short result = 0;
+	int result = 0;
 	switch(oper)
 	{
 		case '+':
@@ -15,7 +15,7 @@ short evaluate(short num1, char oper, short num2)
 			result = num1 * num2;
 			break;
 		case '/':
-			//result = num1 / num2;
+			result = num1 / num2;
 			break;
 	}
 	return result;
