@@ -1,7 +1,7 @@
 #ifndef __KMEM_H__
 #define __KMEM_H__
 
-#include "screen.h"
+#include <screen.h>
 
 #define NULL ((void *)0)
 

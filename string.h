@@ -1,7 +1,7 @@
 #ifndef __STRING_H__
 #define __STRING_H__
 
-#include "kmem.h"
+#include <kmem.h>
 
 
 int strlen(const char *);

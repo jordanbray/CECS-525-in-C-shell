@@ -1,9 +1,9 @@
 #ifndef __TREE_H__
 #define __TREE_H__
 
-#include "kmem.h"
-#include "string.h"
-#include "linked_list.h"
+#include <kmem.h>
+#include <string.h>
+#include <linked_list.h>
 
 struct tnode {
  char *key;

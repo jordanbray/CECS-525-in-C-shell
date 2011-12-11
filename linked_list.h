@@ -1,7 +1,7 @@
 #ifndef __LINKED_LIST_H__
 #define __LINKED_LIST_H__
 
-#include "kmem.h"
+#include <kmem.h>
 
 struct linked_list {
 	void *value;

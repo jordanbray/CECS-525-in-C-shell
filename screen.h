@@ -1,7 +1,7 @@
 #ifndef __SCREEN_H__
 #define __SCREEN_H__
 
-#include "string.h"
+#include <string.h>
 
 void initialize_acia();
 
