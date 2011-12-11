@@ -221,6 +221,8 @@ char *strcat(char *destination, const char *source) {
 	while ((destination[i] = source[i]) != 0)
 		i++;
 
+	destination[i] = 0;
+
 	return destination;
 }
 
@@ -234,6 +236,8 @@ char *strncat(char *destination, const char *source, size_t num) {
 		destination[i] = source[i];
 		i++;
 	}
+
+	destination[i] = 0;
 
 	return destination;
 }
