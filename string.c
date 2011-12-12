@@ -143,7 +143,7 @@ void *memchr(void *ptr, int value, size_t num) {
 
 	for (i=0;i<num;i++) {
 		if (ptr[i] == value)
-			return ptr[i];
+			return *ptr[i];
 	}
 
 	return NULL;
@@ -154,7 +154,7 @@ const void *memchr(const void *ptr, int value, size_t num) {
 
 	for (i=0;i<num;i++) {
 		if (ptr[i] == value)
-			return ptr[i];
+			return *ptr[i];
 	}
 
 	return NULL;
@@ -254,4 +254,26 @@ int strtoint(const char *str)
 	}
 	
 	return value;
+}
+
+size_t strcspn ( const char * str1, const char * str2 ) {
+	int i, j;
+
+	for (i=0;i<strlen(str1);i++) {
+		for (j=0;j<strlen(str2);j++) {
+			if (str1[i] == str2[j])
+				return j;
+		}
+	}
+}
+
+char *strpbrk (const char *s1, const char *s2) {
+	int i,j;
+
+	for (i=0;i<strlen(s1);i++) {
+		for (j=0;j<strlen(s2);j++) {
+			if (s1[i] == s2[j])
+				return *s1[i];
+		}
+	}
 }
