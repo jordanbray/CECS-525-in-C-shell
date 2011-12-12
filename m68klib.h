@@ -1,7 +1,7 @@
 #ifndef __M68KLIB_H__
 #define __M68KLIB_H__
 
-#include "screen.h"
+#include <screen.h>
 
 /**
  * Status Register

@@ -11,13 +11,13 @@
  * Design class.
  * */
 
-#include "screen.h"
-#include "kmem.h"
-#include "string.h"
-#include "shell.h"
-#include "tree.h"
-#include "commands/commands.h"
-#include "auth/authentication.h"
+#include <screen.h>
+#include <kmem.h>
+#include <string.h>
+#include <shell.h>
+#include <tree.h>
+#include <commands/commands.h>
+#include <auth/authentication.h>
 
 /**
  * Main kernel function

@@ -7,7 +7,7 @@ OBJCOPY=m68k-elf-objcopy
 QEMU=/opt/m68k/bin/qemu-system-m68k
 
 # don't touch these...
-CFLAGS=-nostdlib -nostartfiles -nodefaultlibs --no-builtin
+CFLAGS=-nostdinc -nostdlib -ffreestanding -nostartfiles -nodefaultlibs
 CFLAGS+=-m68000
 CFLAGS+=-Os
 CFLAGS+=-I.

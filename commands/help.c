@@ -6,7 +6,6 @@
  */
 
 #include "help.h"
-#include "shell.h"
 
 int help(int argc, const char** argv) {
 	shell_func func;
