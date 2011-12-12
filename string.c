@@ -138,7 +138,7 @@ void *memmove(void *dst, const void *src, int size)
 	return dst;
 }
 
-void *memchr(const void *ptr, int value, size_t num) {
+void *memchr(const void *ptr, int value, int num) {
 	int i;
 
 	for (i=0;i<num;i++) {
@@ -192,7 +192,7 @@ char *strcpy(char *destination, const char *source) {
 	return destination;
 }
 
-char *strncpy(char *destination, const char *source, size_t num) {
+char *strncpy(char *destination, const char *source, int num) {
 	int i;
 	for (i=0;i<num;i++) {
 		destination[i] = source[i];
@@ -216,7 +216,7 @@ char *strcat(char *destination, const char *source) {
 	return destination;
 }
 
-char *strncat(char *destination, const char *source, size_t num) {
+char *strncat(char *destination, const char *source, int num) {
 	int i = 0;
 
 	while (destination[i] != 0)
@@ -246,7 +246,7 @@ int strtoint(const char *str)
 	return value;
 }
 
-size_t strcspn ( const char * str1, const char * str2 ) {
+int strcspn ( const char * str1, const char * str2 ) {
 	int i, j;
 
 	for (i=0;i<strlen(str1);i++) {
@@ -255,6 +255,8 @@ size_t strcspn ( const char * str1, const char * str2 ) {
 				return j;
 		}
 	}
+
+	return strlen(str1);
 }
 
 char *strpbrk (const char *s1, const char *s2) {
@@ -266,4 +268,32 @@ char *strpbrk (const char *s1, const char *s2) {
 				return *s1[i];
 		}
 	}
+
+	return NULL;
 }
+
+char *strrchr ( const char * s, int c) {
+	int i;
+
+	for (i=(strlen(s)-1);i>=0;i--) {
+		if (s[i] == c)
+			return *s[i];
+	}
+
+	return NULL;
+}
+
+int strspn ( const char *s1, const char *s2) {
+	int i,j;
+
+	for (i=0;i<strlen(s1);i++) {
+		for (j=0;j<strlen(s2);j++) {
+			if (s1[i] != s2[j] && j == (strlen(s2) - 1))
+				return i;
+		}
+	}
+
+	return strlen(s1);
+}
+
+//TODO: Implement strtok
