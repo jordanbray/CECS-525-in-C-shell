@@ -247,53 +247,51 @@ int strtoint(const char *str)
 }
 
 int strcspn ( const char * str1, const char * str2 ) {
-	int i, j;
-
-	for (i=0;i<strlen(str1);i++) {
-		for (j=0;j<strlen(str2);j++) {
-			if (str1[i] == str2[j])
-				return j;
-		}
-	}
-
-	return strlen(str1);
+	int ret=0;
+	while(*s1)
+	if(strchr(s2,*s1))
+		return ret;
+	else
+		s1++,ret++;
+	return ret;
 }
 
 char *strpbrk (const char *s1, const char *s2) {
-	int i,j;
-
-	for (i=0;i<strlen(s1);i++) {
-		for (j=0;j<strlen(s2);j++) {
-			if (s1[i] == s2[j])
-				return ((char *)(s1 + i));
-		}
-	}
-
-	return NULL;
+	while(*s1)
+		if(strchr(s2, *s1++))
+			return (char*)--s1;
+	return 0;
 }
 
-char *strrchr ( const char * s, int c) {
-	int i;
+char *strrchr (const char *s, int c) {
+	char* ret=0;
+	do {
+		if( *s == (char)c )
+			ret=s;
+	} while(*s++);
 
-	for (i=(strlen(s)-1);i>=0;i--) {
-		if (s[i] == c)
-			return ((char *)(s + i));
-	}
-
-	return NULL;
+	return ret;
 }
 
 int strspn ( const char *s1, const char *s2) {
-	int i,j;
+	size_t ret=0;
+	while(*s1 && strchr(s2,*s1++))
+		ret++;
 
-	for (i=0;i<strlen(s1);i++) {
-		for (j=0;j<strlen(s2);j++) {
-			if (s1[i] != s2[j] && j == (strlen(s2) - 1))
-				return i;
-		}
-	}
-
-	return strlen(s1);
+	return ret;
 }
 
-//TODO: Implement strtok
+char *strtok(char * str, const char * delim)
+{
+    static char* p=0;
+    if(str)
+        p=str;
+    else if(!p)
+        return 0;
+    str=p+strspn(p,delim);
+    p=str+strcspn(str,delim);
+    if(p==str)
+        return p=0;
+    p = *p ? *p=0,p+1 : 0;
+    return str;
+}
