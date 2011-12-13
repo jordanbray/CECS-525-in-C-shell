@@ -5,6 +5,7 @@
  */
 #include <string.h>
 #include <screen.h>
+#include <math.h>
 
 int calc(int, const char **);
 int calc_help(int, const char **);
