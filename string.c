@@ -143,7 +143,7 @@ void *memchr(const void *ptr, int value, int num) {
 
 	for (i=0;i<num;i++) {
 		if (((unsigned char *)ptr)[i] == (unsigned char)value) {
-			return ((unsigned char *)ptr)[i];
+			return ((unsigned char *)(ptr + i));
 		}
 	}
 
@@ -265,7 +265,7 @@ char *strpbrk (const char *s1, const char *s2) {
 	for (i=0;i<strlen(s1);i++) {
 		for (j=0;j<strlen(s2);j++) {
 			if (s1[i] == s2[j])
-				return *s1[i];
+				return ((char *)(s1 + i));
 		}
 	}
 
@@ -277,7 +277,7 @@ char *strrchr ( const char * s, int c) {
 
 	for (i=(strlen(s)-1);i>=0;i--) {
 		if (s[i] == c)
-			return *s[i];
+			return ((char *)(s + i));
 	}
 
 	return NULL;
