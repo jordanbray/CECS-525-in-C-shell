@@ -1,6 +1,6 @@
 #include "calc.h"
 
-short evaluate(short num1, char oper, short num2)
+int evaluate(int num1, char oper, int num2)
 {
 	int result = 0;
 	switch(oper)
