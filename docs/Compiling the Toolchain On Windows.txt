@@ -1,0 +1,27 @@
+m68k tools for windows compilation
+
+* Download binutils-2.22 and compile
+** tar -jxf binutils-2.22.tar.bz2
+** mkdir binutils-build
+** cd binutils-build
+** ../binutils-2.22/configure --target=m68k-elf --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib --localstatedir=/var --datadir=/usr/share --mandir=/usr/share/man --infodir=/usr/share/info
+** make
+** make install
+
+* Download gdb-7.3 and compile
+** tar -jxf gdb-7.3.tar.bz2
+** mkdir gdb-build
+** cd gdb-build
+** ../gdb-7.3/configure --target=m68k-elf --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib --localstatedir=/var --datadir=/usr/share --mandir=/usr/share/man --infodir=/usr/share/info
+** make
+** make install
+
+* Download gcc-4.4.6 and compile
+** tar -jxf gcc-4.4.6.tar.bz2
+** mkdir gcc-build
+** cd gcc-build
+** ../gcc-4.4.6/configure --target=m68k-elf --enable-languages=c --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib --localstatedir=/var --datadir=/usr/share --mandir=/usr/share/man --infodir=/usr/share/info
+** make
+** make install
+
+
