@@ -4,6 +4,7 @@ LD=m68k-elf-ld
 OBJDUMP=m68k-elf-objdump
 AS=m68k-elf-as
 OBJCOPY=m68k-elf-objcopy
+#QEMU=/opt/m68k/bin/qemu-system-m68k
 QEMU="/cygdrive/c/Program Files/Qemu/qemu-system-m68k.exe"
 
 # don't touch these...
@@ -46,10 +47,16 @@ disassemble: main.srec
 	${OBJDUMP} -D attach_gdb_to_this
 
 run: main.srec
-	${QEMU} -M cecs -nographic -kernel main.srec -serial mon:telnet:127.0.0.1:4444,server,nowait -gdb tcp::1234
+	${QEMU} -M cecs -nographic -kernel main.srec -serial mon:telnet:127.0.0.1:4444,server,nowait -gdb tcp:127.0.0.1:1234
+
+connect: main.srec
+	telnet 127.0.0.1 4444
 
 debug: main.srec
-	${QEMU} -M cecs -nographic -kernel main.srec -serial mon:telnet:127.0.0.1:4444,server,nowait -S -gdb tcp::1234
+	${QEMU} -M cecs -nographic -kernel main.srec -serial mon:telnet:127.0.0.1:4444,server,nowait -S -gdb tcp:127.0.0.1:1234
+	
+gdb: main.srec
+	./run_gdb
 
 clean:
 	-rm attach_gdb_to_this main.srec main.map *.o commands/*.o crypto/*.o auth/*.o

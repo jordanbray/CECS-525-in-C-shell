@@ -12,7 +12,7 @@
 \end{center}
 
 \ssection{Starting Development Environment}
-This project makes use of several development tools, all of which are open source.  A virtual machine image has been provided which contains all the nessisary tools for development.  Below is a list of instructions to get the virtual machine up and rinning.
+This project makes use of several development tools, all of which are open source.  A virtual machine image has been provided which contains all the necessary tools for development.  Below is a list of instructions to get the virtual machine up and running.
 \begin{itemize}
 \item Download the VirtualBox VM image from: http:\//vkappa.speedacm.org/download/M68k\_Dev.ova
 \item Download and install VirtualBox from: https://www.virtualbox.org/wiki/Downloads
@@ -26,17 +26,17 @@ This project makes use of several development tools, all of which are open sourc
 \item Start the graphical session (XFCE) by typing the command 'startx' then hitting enter.
 \end{itemize}
 
-To start a new project, it is recommended that you make a copy of our kernel and modify that.  To do this, go to the terminal and (from your home directory) type: cp -r CECS-525-in-C-shell/ your\_project\_name
+To start a new project, it is recommended that you make a copy of the kernel and modify that.  To do this, go to the terminal and (from your home directory) type: cp -r CECS-525-in-C-shell/ your\_project\_name
 
-\noindent{\Large 2. Compiling the kernel}
-
-\ssection{Compiling the kernel}
+\ssection{Compiling and debugging the kernel}
 There are several commands available in the provided Makefile.\\
 
 \begin{tabulary}{\textwidth}{r L}
 \bf{make} & Compiles and links the kernel\\
 \bf{make run} & Compiles and links the kernel. The compiled kernel is then loaded into QEMU, where it begins executing.\\
 \bf{make debug} & Compiles and links the kernel. The compiled kernel is then loaded into QEMU, where it waits for a GDB session to connect.\\
+\bf{make connect} & Connect to a currently running QEMU session to view the serial output.\\
+\bf{make gdb} & Opens a gdb connection to a QEMU session running a debug version of the kernel.\\
 \bf{make disassemble} & Compiles the kernel and prints the result to the screen.\\
 \bf{make clean} & Deletes all compiled output files.
 \end{tabulary}
@@ -68,30 +68,31 @@ GDB is a command line utility which attaches to the running QEMU session to prov
 
 The m68k educational kernel comes equipped with a basic shell, which is accessible over serial tty. Upon startup the shell will prompt the user for a username. Once a username has been provided the user will be prompted for a password. By default the username and password are both 'root'. Username and password configurations are found within 'users.c' in the 'auth' directory. To add a new user add a new entry to the '\emph{add\_users()}' function in the form of '\emph{register\_user("$<$username$>$", "$<$password$>$");}'.
 
-Once a user has logged on they will be presented with a prompt in the form of '\emph{root$>$}'. The shell supports all printable ascii characters, backspace, and return; arrow keys are not supported. Additionally simple tab completion has been implemented for commands.\\
+Once a user has logged on they will be presented with a prompt in the form of '\emph{root$>$}'. The shell supports all printable ascii characters, backspace, and return; arrow keys are not supported. Additionally simple tab completion has been implemented for commands. For additional information on available commands pleasel see the 'help' command\\
 
 \ssection{Available Libraries}
 The m68k educational kernel does not contain a full implementation of libc. Several libraries have been implemented for use on the m68k.\\
 
 \begin{tabulary}{\textwidth}{r L}
 \bf{screen.h} & A collection of functions for printing text to the screen and for reading input from the user.\\
-\bf{string.h} & A simplified implementation of the clib 'string.h'.\\
+\bf{string.h} & A full implementation of the clib 'string.h'.\\
+\bf{math.h} & Implementations of math symbols such as modulus and division.\\
 \bf{kmem.h} & Memory management functions such as 'kmalloc' and kfree'.\\
 \bf{linked\_list.h} & A simple implementation of a linked list.\\
 \bf{tree.h} & A simple implementation of a balanced binary tree.\\
-\bf{auth.h} & A simple user authentication system.\\
+\bf{auth/auth.h} & A simple user authentication system.\\
 \end{tabulary}
 
 \ssection{Writing programs}
-User programs must placed inside the 'commands' directory and contain a valid .c and .h file. Since there is no user-space programs must be linked to the shell at compile time; to do this the program's header file must be added to the 'commands.h' header file. Additionally a new entry must be added to the '\emph{initialize\_commands()}' function inside of commands.c in the form of '\emph{add\_cmd("$<$Command$>$",  $<$FunctionName$>$);}'. Functions linked this way must have the prototype of '\emph{$<$FunctionName$>$(int, const char**)}' The first parameter is the number of command arguments; the second is the arguments themselves.\\
+User programs must placed inside the 'commands' directory and contain a valid .c and .h file. Since there is no user-space programs must be linked to the shell at compile time; to do this the program's header file must be added to the 'commands.h' header file. Additionally a new entry must be added to the '\emph{initialize\_commands()}' function inside of commands.c in the form of '\emph{add\_cmd("$<$Command$>$",  $<$CmdFunctionName$>$),  $<$HelpFunctionName$>$);}'. Functions linked this way must have the prototype of '\emph{$<$FunctionName$>$(int, const char**)}' The first parameter is the number of command arguments; the second is the arguments themselves.\\
 
 \ssection{Memory management}
-Because the M68K only has 4K of memory availble when you first start, memory management is extremely important. When using this kernel you must use the \emph{kmem} library, which has the functions \emph{kalloc} and \emph{kfree}. These functions work in a similar manner to malloc and free from the standard C library. You can check to see how much memory is being used from the shell with the command \emph{memstatus}. It is reccomended that you use memstatus before and after you test a command to make sure you are doing proper memory management, and do not have memory leaks.
+Because the M68K only has 4K of memory availble when you first start, memory management is extremely important. When using this kernel you must use the \emph{kmem} library, which has the functions \emph{kalloc} and \emph{kfree}. These functions work in a similar manner to malloc and free from the standard C library. You can check to see how much memory is being used from the shell with the command \emph{memstatus}. It is reccomended that you use the command 'memstatus' before and after you test a proper to make sure you are doing proper memory management, and do not have memory leaks.
 
 \ssection{Strings}
-Due to the fact that M68K boards used are for educational purposes, you can not assume that the memory will be all zeros before your program starts. Because of this, it is extremely important that you ensure all strings are terminated with a 0. If they are not, the string functions will not work properly, and could go off to execute other arbitrary code.
+Due to the fact that RAM is randomized upon start-up, you can't assume that the memory will be all zeros before your program starts. Because of this, it is extremely important that you ensure all strings are terminated with a 0. If they are not, the string functions will not work properly, and could go off to execute other arbitrary code.
 
 \ssection{Users}
-The user authentication in this implementation is very basic. You can have multiple user accounts, but only 1 user can be logged in at a time. Users have 3 attempts to log into their account, and following the third invalid attempt the account is locked out. This can be reset by simply restarting the board. The user can change their password via the \emph{passwd} command provided.
+The user authentication in this implementation is very basic. You can have multiple user accounts, but only 1 user can be logged in at a time. Users have 3 attempts to log into their account, and following the third invalid attempt the account is locked out. This can be reset by simply restarting the board.
 
 \end{document}
