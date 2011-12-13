@@ -21,10 +21,10 @@ CRYPT_SRCS=$(wildcard crypto/*.c)
 CRYPT_OBJS=$(patsubst crypto/%.c,crypto/%.o,$(CRYPT_SRCS))
 
 # code
-main.srec: linker.x iv.o $(KERNEL_OBJS) $(CRYPT_OBJS) $(AUTH_OBJS) $(CMD_OBJS)
-	${LD} $(KERNEL_OBJS) $(CRYPT_OBJS) $(AUTH_OBJS) $(CMD_OBJS) iv.o -o main.srec -T linker.x -Map main.map
-	cp main.srec attach_gdb_to_this
-	${OBJCOPY} -O srec main.srec
+main: linker.x iv.o $(KERNEL_OBJS) $(CRYPT_OBJS) $(AUTH_OBJS) $(CMD_OBJS)
+	${LD} $(KERNEL_OBJS) $(CRYPT_OBJS) $(AUTH_OBJS) $(CMD_OBJS) iv.o -o main -T linker.x -Map main.map
+	cp main attach_gdb_to_this
+	${OBJCOPY} -O srec main
 
 iv.o: iv.asm
 	${AS} -o iv.o iv.asm
@@ -42,14 +42,14 @@ crypto/%.o: crypto/%.c
 	${CC} ${CFLAGS} -o $@ -c $^
 
 # commands
-disassemble: main.srec
+disassemble: main
 	${OBJDUMP} -D attach_gdb_to_this
 
-run: main.srec
-	${QEMU} -M cecs -nographic -kernel main.srec -serial mon:telnet:127.0.0.1:4444,server,nowait -gdb tcp::1234
+run: main
+	${QEMU} -M cecs -nographic -kernel main -serial mon:telnet:127.0.0.1:4444,server,nowait -gdb tcp::1234
 
-debug: main.srec
-	${QEMU} -M cecs -nographic -kernel main.srec -serial mon:telnet:127.0.0.1:4444,server,nowait -S -gdb tcp::1234
+debug: main
+	${QEMU} -M cecs -nographic -kernel main -serial mon:telnet:127.0.0.1:4444,server,nowait -S -gdb tcp::1234
 
 clean:
-	-rm attach_gdb_to_this main.srec main.map *.o commands/*.o crypto/*.o auth/*.o
+	-rm attach_gdb_to_this main main.map *.o commands/*.o crypto/*.o auth/*.o

@@ -274,7 +274,7 @@ char *strrchr (const char *s, int c) {
 }
 
 int strspn ( const char *s1, const char *s2) {
-	int ret=0;
+	size_t ret=0;
 	while(*s1 && strchr(s2,*s1++))
 		ret++;
 
