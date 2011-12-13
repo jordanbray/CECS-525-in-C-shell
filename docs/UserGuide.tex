@@ -13,19 +13,38 @@
 
 \ssection{Starting Development Environment}
 This project makes use of several development tools, all of which are open source.  A virtual machine image has been provided which contains all the necessary tools for development.  Below is a list of instructions to get the virtual machine up and running.
-\begin{itemize}
-\item Download the VirtualBox VM image from: http:\//vkappa.speedacm.org/download/M68k\_Dev.ova
-\item Download and install VirtualBox from: https://www.virtualbox.org/wiki/Downloads
-\item Run VirtualBox, and go to File $\rightarrow$ 'Iport Appliance...'
-\item Click 'Choose...' and select the downloaded M68k\_Dev.ova file.
-\item Click 'Next'
-\item Change RAM to an amount appropriate for your computer (AKA how much you can spare).
-\item Click 'Import.'
-\item Once completed, select 'M68K Development' and click 'Start'.
-\item Once booted, type 'm68kdev' as the username and 'm68k' as the password.
-\item Start the graphical session (XFCE) by typing the command 'startx' then hitting enter.
-\end{itemize}
 
+Installing our software to a windows computer
+\begin{itemize}
+\item Download the Cygwin Installer
+	\begin{itemize}
+	\item http://cygwin.com/setup.exe
+	\end{itemize}
+\item Install Cygwin
+	\begin{itemize}
+	\item Run setup.exe
+	\item Select the following package groups for installation:
+		\begin{itemize}
+		\item Devel
+		\item Editors
+		\item Base
+		\item Libs
+		\item Python
+		\item Shells
+		\end{itemize}
+	\item Search for and select inetutils as well
+	\end{itemize}
+\item Download cecs-5252-tools.tar.gz from the provided url
+	\begin{itemize}
+	\item cd /
+	\item tar -zxf /path/to/cecs-525-tools.tar.gz
+	\end{itemize}
+\item Clone the cecs-525 repository
+	\begin{itemize}
+	\item cd
+	\item git clone git://github.com/jordanbray/CECS-525-in-C-shell.git
+	\end{itemize}
+\end{itemize}
 To start a new project, it is recommended that you make a copy of the kernel and modify that.  To do this, go to the terminal and (from your home directory) type: cp -r CECS-525-in-C-shell/ your\_project\_name
 
 \ssection{Compiling and debugging the kernel}
